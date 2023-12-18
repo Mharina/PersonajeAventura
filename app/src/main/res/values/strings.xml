@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Personaje</string>
+    <string-array name="raza">
+        <item>Humano</item>
+        <item>Elfo</item>
+        <item>Enano</item>
+        <item>Maldito</item>
+    </string-array>
+    <string-array name="clase">
+        <item>Brujo</item>
+        <item>Mago</item>
+        <item>Guerrero</item>
+    </string-array>
+    <string-array name="estadoVital">
+        <item>Adolescente</item>
+        <item>Adulto</item>
+        <item>Anciano</item>
+    </string-array>
+    <string name="titulo">Creación de personaje</string>
+    <string name="nombre">Nombre</string>
+    <string name="personaje">TODO</string>
+    <string name="raza">Raza</string>
+    <string name="clase">Clase</string>
+    <string name="estado_vital">Estado Vital</string>
+</resources>
