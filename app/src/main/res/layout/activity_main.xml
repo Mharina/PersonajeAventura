@@ -128,10 +128,9 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:backgroundTint="#80000000"
-        android:text="Botón"
+        android:text="Crear"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:background="@drawable/color_boton"
         tools:ignore="TextContrastCheck" />
 
 </LinearLayout>

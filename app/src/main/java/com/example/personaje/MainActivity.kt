@@ -1,7 +1,6 @@
 package com.example.personaje
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
@@ -13,8 +12,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
-import androidx.core.graphics.createBitmap
-//import com.example.personaje.Personaje
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,22 +19,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var spinnerRaza: Spinner = findViewById(R.id.spinnerRaza)
-        var spinnerClase: Spinner = findViewById(R.id.spinnerClase)
-        var spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
-        var foto: ImageView = findViewById(R.id.imageView)
+        val spinnerRaza: Spinner = findViewById(R.id.spinnerRaza)
+        val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
+        val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
+        val foto: ImageView = findViewById(R.id.imageView)
 
-        var opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
-        var opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
-        var opcionesEstadoVital: Array<String> = resources.getStringArray(R.array.estadoVital)
+        val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
+        val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
+        val opcionesEstadoVital: Array<String> = resources.getStringArray(R.array.estadoVital)
 
-        var adapterRaza: ArrayAdapter<String> =
+        val adapterRaza: ArrayAdapter<String> =
             ArrayAdapter(this, R.layout.color_spinner_fuera, opcionesRaza)
         spinnerRaza.adapter = adapterRaza
-        var adapterClase: ArrayAdapter<String> =
+        val adapterClase: ArrayAdapter<String> =
             ArrayAdapter(this, R.layout.color_spinner_fuera, opcionesClase)
         spinnerClase.adapter = adapterClase
-        var adapterEstadoVital: ArrayAdapter<String> =
+        val adapterEstadoVital: ArrayAdapter<String> =
             ArrayAdapter(this, R.layout.color_spinner_fuera, opcionesEstadoVital)
         spinnerEstadoVital.adapter = adapterEstadoVital
 
@@ -52,10 +49,11 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                var seleccionRaza: String = parent?.getItemAtPosition(position) as String
-                var seleccionClase: String = spinnerClase.selectedItem as String
-                var seleccionEstadoVital: String = spinnerEstadoVital.selectedItem as String
-                obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
+                val seleccionRaza: String = parent?.getItemAtPosition(position) as String
+                val seleccionClase: String = spinnerClase.selectedItem as String
+                val seleccionEstadoVital: String = spinnerEstadoVital.selectedItem as String
+                val imagen = obtImg()
+                imagen.obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -68,10 +66,11 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                var seleccionClase: String = parent?.getItemAtPosition(position) as String
-                var seleccionRaza: String = spinnerRaza.selectedItem as String
-                var seleccionEstadoVital: String = spinnerEstadoVital.selectedItem as String
-                obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
+                val seleccionClase: String = parent?.getItemAtPosition(position) as String
+                val seleccionRaza: String = spinnerRaza.selectedItem as String
+                val seleccionEstadoVital: String = spinnerEstadoVital.selectedItem as String
+                val imagen = obtImg()
+                imagen.obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -84,241 +83,24 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                var seleccionEstadoVital: String = parent?.getItemAtPosition(position) as String
-                var seleccionRaza: String = spinnerRaza.selectedItem as String
-                var seleccionClase: String = spinnerClase.selectedItem as String
-                obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
+                val seleccionEstadoVital: String = parent?.getItemAtPosition(position) as String
+                val seleccionRaza: String = spinnerRaza.selectedItem as String
+                val seleccionClase: String = spinnerClase.selectedItem as String
+                val imagen = obtImg()
+                imagen.obtenerImagen3(foto, seleccionRaza, seleccionClase, seleccionEstadoVital)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        var button: Button = findViewById<Button>(R.id.button)
-        var nombre: EditText  = findViewById<EditText>(R.id.editTextText)
+        val button: Button = findViewById(R.id.button)
+        val nombre: EditText  = findViewById(R.id.editTextText)
         button.setOnClickListener {
             val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
             val personaje = Personaje(nombre.text.toString(), 100, spinnerEstadoVital.selectedItem as String, spinnerRaza.selectedItem as String, spinnerClase.selectedItem as String)
             intent.putExtra("personaje", personaje)
             intent.putExtra("imagen_id", foto.drawable.toString())
             startActivity(intent)
-        }
-    }
-    private fun obtenerImagen3(
-        foto: ImageView,
-        seleccionRaza: String,
-        seleccionClase: String,
-        seleccionEstadoVital: String
-    ) {
-
-        when (seleccionRaza) {
-            "Humano" -> {
-                when (seleccionClase) {
-                    "Mago" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.humanomagoadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.humanomagoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.humanomagoanciano)
-                            }
-                        }
-                    }
-
-                    "Brujo" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.humanobrujoadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.humanobrujoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.humanobrujoanciano)
-                            }
-                        }
-                    }
-
-                    "Guerrero" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.humanoguerreroadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.humanoguerreroadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.humanoguerreroanciano)
-                            }
-                        }
-                    }
-                }
-            }
-
-            "Elfo" -> {
-                when (seleccionClase) {
-                    "Mago" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.elfoadolescentemago)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.elfomagoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.elfomagoanciano)
-                            }
-                        }
-                    }
-
-                    "Brujo" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.elfobrujoadolescente2)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.elfobrujoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.elfobrujoanciano)
-                            }
-                        }
-                    }
-
-                    "Guerrero" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.elfoguerreroadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.elfoguerreroadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.elfoguerreroanciano)
-                            }
-                        }
-                    }
-                }
-            }
-
-            "Enano" -> {
-                when (seleccionClase) {
-                    "Mago" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.enanomagoadolescente2)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.enanomagoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.enanomagoanciano)
-                            }
-                        }
-                    }
-
-                    "Brujo" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.enanobrujoadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.enanobrujoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.enanobrujoanciano)
-                            }
-                        }
-                    }
-
-                    "Guerrero" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.enanoguerreroadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.enanoguerreroadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.enanoguerreroanciano)
-                            }
-                        }
-                    }
-                }
-            }
-
-            "Maldito" -> {
-                when (seleccionClase) {
-                    "Mago" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.malditomagoadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.malditomagoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.malditomagoanciano)
-                            }
-                        }
-                    }
-
-                    "Brujo" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.malditobrujoadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.malditobrujoadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.malditobrujoanciano)
-                            }
-                        }
-                    }
-
-                    "Guerrero" -> {
-                        when (seleccionEstadoVital) {
-                            "Adolescente" -> {
-                                foto.setImageResource(R.drawable.malditoguerreroadolescente)
-                            }
-
-                            "Adulto" -> {
-                                foto.setImageResource(R.drawable.malditoguerreroadulto)
-                            }
-
-                            "Anciano" -> {
-                                foto.setImageResource(R.drawable.malditoguerreroanciano)
-                            }
-                        }
-                    }
-                }
-            }
-
         }
     }
 }
