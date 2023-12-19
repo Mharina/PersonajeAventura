@@ -1,6 +1,7 @@
 package com.example.personaje
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
@@ -94,13 +95,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val button: Button = findViewById(R.id.button)
-        val nombre: EditText  = findViewById(R.id.editTextText)
+
         button.setOnClickListener {
-            val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-            val personaje = Personaje(nombre.text.toString(), 100, spinnerEstadoVital.selectedItem as String, spinnerRaza.selectedItem as String, spinnerClase.selectedItem as String)
-            intent.putExtra("personaje", personaje)
-            intent.putExtra("imagen_id", foto.drawable.toString())
-            startActivity(intent)
+            val nombre: EditText = findViewById(R.id.editTextText)
+            if (nombre.text.isBlank()) {
+                nombre.setError("El campo nombre es necesario")
+            } else {
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                val personaje = Personaje(
+                    nombre.text.toString(),
+                    100,
+                    spinnerEstadoVital.selectedItem as String,
+                    spinnerRaza.selectedItem as String,
+                    spinnerClase.selectedItem as String
+                )
+                intent.putExtra("personaje", personaje)
+                intent.putExtra("imagen_id", foto.drawable.toString())
+                startActivity(intent)
+            }
         }
     }
 }
