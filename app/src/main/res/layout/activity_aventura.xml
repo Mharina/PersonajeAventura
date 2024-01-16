@@ -9,24 +9,46 @@
     tools:context=".Aventura">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CC000000"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Aventura"
+        app:title="Dado"
         app:titleTextColor="@color/white" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/paisaje" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:alpha="0.8"
+        android:backgroundTint="#80000000"
+        android:scaleType="centerInside"
+        android:src="@drawable/dado"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="128dp"
-        android:gravity="center_vertical"
-        android:text="PROXIMAMENTE"
-        android:textColor="#F44336"
-        android:textSize="48sp"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:background="#80000000"
+        android:gravity="center_horizontal"
+        android:text="Comienza la aventura, pulsa el DADO para avanzar. CUIDADO puedes encontrarte enemigos"
+        android:textColor="#FFFDFD"
+        android:textSize="20sp"
         android:textStyle="bold" />
+
 </LinearLayout>

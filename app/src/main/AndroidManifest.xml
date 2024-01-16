@@ -14,6 +14,21 @@
         android:theme="@style/Theme.Personaje"
         tools:targetApi="31">
         <activity
+            android:name=".Proximamente"
+            android:exported="false" />
+        <activity
+            android:name=".Enemigo"
+            android:exported="false" />
+        <activity
+            android:name=".Mercader"
+            android:exported="false" />
+        <activity
+            android:name=".Objeto"
+            android:exported="false" />
+        <activity
+            android:name=".Ciudad"
+            android:exported="false" />
+        <activity
             android:name=".Aventura"
             android:exported="false" />
         <activity

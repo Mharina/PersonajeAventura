@@ -22,4 +22,5 @@
     <string name="raza">Raza</string>
     <string name="clase">Clase</string>
     <string name="estado_vital">Estado Vital</string>
+    <string name="proximamente">PROXIMAMENTE</string>
 </resources>
