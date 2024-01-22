@@ -198,7 +198,6 @@ data class Articulo(
     private var tipoArticulo: TipoArticulo,
     private var nombre: Nombre,
     private var peso: Int,
-    private var tipo: String,
     private var img: String,
     private var unidades: Int,
     private var valor: Int
@@ -213,7 +212,6 @@ data class Articulo(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeInt(peso)
-        parcel.writeString(tipo)
         parcel.writeString(img)
         parcel.writeInt(unidades)
         parcel.writeInt(valor)
