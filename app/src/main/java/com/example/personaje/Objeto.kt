@@ -16,6 +16,7 @@ class Objeto : AppCompatActivity() {
             startActivity(intent)
         }
         recojer.setOnClickListener{
+
             var intent = Intent(this@Objeto, Aventura::class.java)
             startActivity(intent)
         }

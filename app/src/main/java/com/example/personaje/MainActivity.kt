@@ -24,6 +24,22 @@ class MainActivity : AppCompatActivity() {
         val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
         val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
         val foto: ImageView = findViewById(R.id.imageView)
+        val dbHelper = DatabaseHelper (this)
+        val arrayArticulos = ArrayList<Articulo>()
+        arrayArticulos.add(Articulo(1,"espada",3,"arma","º",1,4))
+        arrayArticulos.add(Articulo(2,"hacha",4,"arma","º",1,3))
+        arrayArticulos.add(Articulo(3,"arco",3,"arma","º",2,4))
+        arrayArticulos.add(Articulo(4,"escudo",3,"defesa","º",1,4))
+        arrayArticulos.add(Articulo(5,"escudo",3,"defesa","º",5,4))
+        arrayArticulos.add(Articulo(6,"pocion",3,"utilidad","º",2,4))
+        arrayArticulos.add(Articulo(7,"pocion",3,"utilidad","º",7,4))
+        arrayArticulos.add(Articulo(8,"bolsa",3,"recompensa","º",1,4))
+        arrayArticulos.add(Articulo(9,"cofre",3,"recompensa","º",8,4))
+        arrayArticulos.add(Articulo(10,"tesoro",3,"recompensa","º",3,4))
+
+        for (i in 0..9){
+            dbHelper.insertarArticulo(arrayArticulos[i])
+        }
 
         val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
         val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
@@ -117,80 +133,145 @@ class MainActivity : AppCompatActivity() {
         val OBJETOS_ALEATORIOS = DatabaseHelper(this)
     }
 }
-data class Articulo(
-    private var ID: Int,
-    private var nombre: String,
-    private var PESO: Int,
-    private var TIPO: String,
-    private var IMG: String,
-    private var UNIDADES: Int,
-    private var VALOR: Int
-): Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readInt(),
-        parcel.readInt()
-    ) {
+class Mochila(private var pesoMochila: Int){
+    private var contenido=ArrayList<Articulo>()
+
+    fun getPesoMochila():Int{
+        return pesoMochila
     }
+    fun addArticulo(articulo: Articulo) {
+        if (articulo.getPeso() <= pesoMochila) {
+            when (articulo.getTipoArticulo()) {
+                Articulo.TipoArticulo.ARMA -> {
+                    when (articulo.getNombre()) {
+                        Articulo.Nombre.BASTON, Articulo.Nombre.ESPADA, Articulo.Nombre.DAGA,
+                        Articulo.Nombre.MARTILLO, Articulo.Nombre.GARRAS -> {
+                            contenido.add(articulo)
+                            this.pesoMochila -= articulo.getPeso()
+                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                        }
+                        else -> println("Nombre del artículo no válido para el tipo ARMA.")
+                    }
+                }
+                Articulo.TipoArticulo.OBJETO -> {
+                    when (articulo.getNombre()) {
+                        Articulo.Nombre.POCION, Articulo.Nombre.IRA -> {
+                            contenido.add(articulo)
+                            this.pesoMochila -= articulo.getPeso()
+                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                        }
+                        else -> println("Nombre del artículo no válido para el tipo OBJETO.")
+                    }
+                }
+                Articulo.TipoArticulo.PROTECCION -> {
+                    when (articulo.getNombre()) {
+                        Articulo.Nombre.ESCUDO, Articulo.Nombre.ARMADURA -> {
+                            contenido.add(articulo)
+                            this.pesoMochila -= articulo.getPeso()
+                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                        }
+                        else -> println("Nombre del artículo no válido para el tipo PROTECCION.")
+                    }
+                }
+            }
+        } else {
+            println("El peso del artículo excede el límite de la mochila.")
+        }
+    }
+    fun getContenido(): ArrayList<Articulo> {
+        return contenido
+    }
+    fun findObjeto(nombre: Articulo.Nombre): Int {
+        return contenido.indexOfFirst { it.getNombre() == nombre }
+    }
+    override fun toString(): String {
+        return if (contenido.isEmpty()) {
+            "Mochila vacía"
+        } else {
+            "Artículos en la mochila: ${contenido.joinToString("\n")}"
+        }
+    }
+}
+
+data class Articulo(
+    private var id: Int,
+    private var tipoArticulo: TipoArticulo,
+    private var nombre: Nombre,
+    private var peso: Int,
+    private var tipo: String,
+    private var img: String,
+    private var unidades: Int,
+    private var valor: Int
+): Parcelable {
+    enum class TipoArticulo { ARMA, OBJETO, PROTECCION }
+    enum class Nombre { BASTON, ESPADA, DAGA, MARTILLO, GARRAS, POCION, IRA, ESCUDO, ARMADURA }
 
     override fun describeContents(): Int {
         return 0
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(ID)
-        parcel.writeString(nombre)
-        parcel.writeInt(PESO)
-        parcel.writeString(TIPO)
-        parcel.writeString(IMG)
-        parcel.writeInt(UNIDADES)
-        parcel.writeInt(VALOR)
+        parcel.writeInt(id)
+        parcel.writeInt(peso)
+        parcel.writeString(tipo)
+        parcel.writeString(img)
+        parcel.writeInt(unidades)
+        parcel.writeInt(valor)
     }
-    fun getNombre(): String {
+    fun getPeso(): Int {
+        return peso
+    }
+    fun getNombre(): Nombre {
         return nombre
     }
-
-    fun setNombre(nombre: String) {
-        this.nombre = nombre
+    fun getTipoArticulo(): TipoArticulo {
+        return tipoArticulo
     }
-    fun getPESO(): Int {
-        return PESO
+    fun getAumentoAtaque(): Int {
+        return when (nombre) {
+            Nombre.BASTON -> 10
+            Nombre.ESPADA -> 20
+            Nombre.DAGA -> 15
+            Nombre.MARTILLO -> 25
+            Nombre.GARRAS -> 30
+            Nombre.IRA -> 80
+            else -> 0 // Para otros tipos de armas no especificados
+        }
     }
-
-    fun setPESO(PESO: Int) {
-        this.PESO = PESO
+    fun getAumentoDefensa(): Int {
+        return when (nombre) {
+            Nombre.ESCUDO -> 10
+            Nombre.ARMADURA -> 20
+            else -> 0 // Para otros tipos de protecciones no especificados
+        }
     }
-    fun getTIPO(): String {
-        return TIPO
-    }
-
-    fun setTIPO(TIPO: String) {
-        this.TIPO = TIPO
-    }
-    fun getIMG(): String {
-        return IMG
-    }
-
-    fun setNIMG(IMG: String) {
-        this.IMG = IMG
-    }
-    fun getUNIDADES(): Int {
-        return UNIDADES
-    }
-
-    fun setUNIDADES(UNIDADES: Int) {
-        this.UNIDADES = UNIDADES
-    }
-    fun getVALOR(): Int {
-        return VALOR
+    fun getAumentoVida(): Int {
+        return when (nombre) {
+            Nombre.POCION -> 100
+            else -> 0 // Para otros tipos de objetos no especificados
+        }
     }
 
-    fun setVALOR(VALOR: Int) {
-        this.VALOR = VALOR
+    fun getImg(): String {
+        return img
+    }
+
+    fun setImg(img: String) {
+        this.img = img
+    }
+    fun getUnidades(): Int {
+        return unidades
+    }
+
+    fun setUnidades(unidades: Int) {
+        this.unidades = unidades
+    }
+    fun getValor(): Int {
+        return valor
+    }
+
+    fun setValor(valor: Int) {
+        this.valor = valor
     }
 
      companion object CREATOR : Parcelable.Creator<Articulo> {

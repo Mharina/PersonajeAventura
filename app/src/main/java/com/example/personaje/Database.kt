@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE = "Objetos.db"
+        private const val DATABASE = "OBJETOS_ALEATORIOS.db"
         private const val TABLA_OBJETOS = "objetos"
         private const val KEY_ID = "_id"
         private const val COLUMN_NOMBRE = "nombre"
@@ -29,23 +29,23 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
         db.execSQL("DROP TABLE IF EXISTS $TABLA_OBJETOS")
         onCreate(db)
     }
-    fun insertarArticulo(articuo: Articulo):Long {
+    fun insertarArticulo(articulo: Articulo):Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_NOMBRE, articuo.getNombre())
-            put(COLUMN_PESO, articuo.getPESO())
-            put(COLUMN_TIPO, articuo.getTIPO())
-            put(COLUMN_IMG, articuo.getIMG())
-            put(COLUMN_UNIDADES, articuo.getUNIDADES())
-            put(COLUMN_VALOR, articuo.getVALOR())
+            put(COLUMN_NOMBRE, articulo.getNombre())
+            put(COLUMN_PESO, articulo.getPeso())
+            put(COLUMN_TIPO, articulo.getTipo())
+            put(COLUMN_IMG, articulo.getImg())
+            put(COLUMN_UNIDADES, articulo.getUnidades())
+            put(COLUMN_VALOR, articulo.getValor())
         }
         val id= db.insert(TABLA_OBJETOS, null, values)
         db.close()
         return id
     }
     @SuppressLint("Range")
-    fun getArticulo(): ArrayList<Personaje> {
-        val personajes = ArrayList<Personaje>()
+    fun getArticulo(): ArrayList<Articulo> {
+        val articulos = ArrayList<Articulo>()
         val selectQuery = "SELECT * FROM $TABLA_OBJETOS"
         val db = this.readableDatabase
         val cursor = db.rawQuery(selectQuery, null)
@@ -53,16 +53,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
-                val pesoMochila = cursor.getInt(cursor.getColumnIndex(COLUMN_PESO))
-                val estadoVital = cursor.getString(cursor.getColumnIndex(COLUMN_TIPO))
-                val clase = cursor.getString(cursor.getColumnIndex(COLUMN_IMG))
-                val raza = cursor.getString(cursor.getColumnIndex(COLUMN_VALOR))
-                //personajes.add(Personaje(nombre, pesoMochila, estadoVital, clase, raza))
+                val peso = cursor.getInt(cursor.getColumnIndex(COLUMN_PESO))
+                val tipo = cursor.getString(cursor.getColumnIndex(COLUMN_TIPO))
+                val img = cursor.getString(cursor.getColumnIndex(COLUMN_IMG))
+                val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
+                val valor = cursor.getInt(cursor.getColumnIndex(COLUMN_VALOR))
+                articulos.add(Articulo(id,nombre, peso, tipo, img, unidades, valor))
             } while (cursor.moveToNext())
         }
         cursor.close()
         db.close()
-        return personajes
+        return articulos
     }
-
 }
