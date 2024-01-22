@@ -114,7 +114,95 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        val OBJETOS_ALEATORIOS = DatabaseHelper(this)
     }
+}
+data class Articulo(
+    private var ID: Int,
+    private var nombre: String,
+    private var PESO: Int,
+    private var TIPO: String,
+    private var IMG: String,
+    private var UNIDADES: Int,
+    private var VALOR: Int
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt()
+    ) {
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(ID)
+        parcel.writeString(nombre)
+        parcel.writeInt(PESO)
+        parcel.writeString(TIPO)
+        parcel.writeString(IMG)
+        parcel.writeInt(UNIDADES)
+        parcel.writeInt(VALOR)
+    }
+    fun getNombre(): String {
+        return nombre
+    }
+
+    fun setNombre(nombre: String) {
+        this.nombre = nombre
+    }
+    fun getPESO(): Int {
+        return PESO
+    }
+
+    fun setPESO(PESO: Int) {
+        this.PESO = PESO
+    }
+    fun getTIPO(): String {
+        return TIPO
+    }
+
+    fun setTIPO(TIPO: String) {
+        this.TIPO = TIPO
+    }
+    fun getIMG(): String {
+        return IMG
+    }
+
+    fun setNIMG(IMG: String) {
+        this.IMG = IMG
+    }
+    fun getUNIDADES(): Int {
+        return UNIDADES
+    }
+
+    fun setUNIDADES(UNIDADES: Int) {
+        this.UNIDADES = UNIDADES
+    }
+    fun getVALOR(): Int {
+        return VALOR
+    }
+
+    fun setVALOR(VALOR: Int) {
+        this.VALOR = VALOR
+    }
+
+     companion object CREATOR : Parcelable.Creator<Articulo> {
+        override fun createFromParcel(parcel: Parcel): Articulo {
+            return Articulo(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Articulo?> {
+            return arrayOfNulls(size)
+        }
+    }
+
 }
 data class Personaje(
     private var nombre: String,
