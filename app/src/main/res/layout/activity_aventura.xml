@@ -35,6 +35,7 @@
         android:backgroundTint="#80000000"
         android:scaleType="centerInside"
         android:src="@drawable/dado"
+        android:visibility="visible"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView

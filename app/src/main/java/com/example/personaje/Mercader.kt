@@ -3,7 +3,9 @@ package com.example.personaje
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import androidx.core.view.isInvisible
 
 class Mercader : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +18,11 @@ class Mercader : AppCompatActivity() {
             startActivity(intent)
         }
         comerciar.setOnClickListener{
-            var intent = Intent(this@Mercader, Proximamente::class.java)
-            startActivity(intent)
+            //var intent = Intent(this@Mercader, Proximamente::class.java)
+            //startActivity(intent)
+            //comerciar.visibility(view.gone)
+            comerciar.visibility = View.GONE
+            //comerciar.visibility = View.GONE
         }
     }
 }

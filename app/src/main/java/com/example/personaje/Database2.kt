@@ -6,10 +6,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
+class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE = "OBJETOS_ALEATORIOS.db"
+        private const val DATABASE = "OBJETOS_MERCADER.db"
         private const val TABLA_OBJETOS = "objetos"
         private const val KEY_ID = "_id"
         private const val COLUMN_NOMBRE = "nombre"
@@ -32,9 +32,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
     fun insertarArticulo(articulo: Articulo):Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_NOMBRE, articulo.getNombre().name)
+            put(COLUMN_NOMBRE, articulo.getNombre().toString())
             put(COLUMN_PESO, articulo.getPeso())
-            put(COLUMN_TIPO, articulo.getTipoArticulo().name)
+            put(COLUMN_TIPO, articulo.getTipoArticulo().toString())
             put(COLUMN_IMG, articulo.getImg())
             put(COLUMN_UNIDADES, articulo.getUnidades())
             put(COLUMN_VALOR, articulo.getValor())
@@ -59,8 +59,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
                 val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
                 val valor = cursor.getInt(cursor.getColumnIndex(COLUMN_VALOR))
                 val enum = enumArt()
-                articulos.add(Articulo(id,enum.enuT(tipo), enum.enuN(nombre), peso, img, unidades, valor))
-            } while (cursor.moveToNext())
+                articulos.add(Articulo(id,enum.enuT(tipo), enum.enuN(nombre), peso, img, unidades, valor))            } while (cursor.moveToNext())
         }
         cursor.close()
         db.close()

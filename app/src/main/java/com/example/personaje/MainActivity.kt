@@ -24,22 +24,39 @@ class MainActivity : AppCompatActivity() {
         val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
         val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
         val foto: ImageView = findViewById(R.id.imageView)
-        val dbHelper = DatabaseHelper (this)
+        val dbHelperA = DatabaseHelper (this)
+        val dbHelperC = DatabaseHelper2 (this)
         val arrayArticulos = ArrayList<Articulo>()
-        arrayArticulos.add(Articulo(1,"espada",3,"arma","º",1,4))
-        arrayArticulos.add(Articulo(2,"hacha",4,"arma","º",1,3))
-        arrayArticulos.add(Articulo(3,"arco",3,"arma","º",2,4))
-        arrayArticulos.add(Articulo(4,"escudo",3,"defesa","º",1,4))
-        arrayArticulos.add(Articulo(5,"escudo",3,"defesa","º",5,4))
-        arrayArticulos.add(Articulo(6,"pocion",3,"utilidad","º",2,4))
-        arrayArticulos.add(Articulo(7,"pocion",3,"utilidad","º",7,4))
-        arrayArticulos.add(Articulo(8,"bolsa",3,"recompensa","º",1,4))
-        arrayArticulos.add(Articulo(9,"cofre",3,"recompensa","º",8,4))
-        arrayArticulos.add(Articulo(10,"tesoro",3,"recompensa","º",3,4))
-
+        val arrayArticulosC = ArrayList<Articulo>()
+        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",1,4))
+        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,4,"arma",1,3))
+        arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",2,4))
+        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",1,4))
+        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",5,4))
+        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",2,4))
+        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",7,4))
+        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",1,4))
+        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",8,4))
+        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",3,4))
         for (i in 0..9){
-            dbHelper.insertarArticulo(arrayArticulos[i])
+            dbHelperA.insertarArticulo(arrayArticulos[i])
         }
+
+        arrayArticulosC.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",1,4))
+        arrayArticulosC.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,4,"arma",1,3))
+        arrayArticulosC.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",2,4))
+        arrayArticulosC.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",1,4))
+        arrayArticulosC.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",5,4))
+        arrayArticulosC.add(Articulo(6,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",2,4))
+        arrayArticulosC.add(Articulo(7,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",7,4))
+        arrayArticulosC.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",1,4))
+        arrayArticulosC.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",8,4))
+        arrayArticulosC.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",3,4))
+        for (i in 0..9){
+            dbHelperC.insertarArticulo(arrayArticulosC[i])
+        }
+
+
 
         val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
         val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
@@ -204,17 +221,31 @@ data class Articulo(
 ): Parcelable {
     enum class TipoArticulo { ARMA, OBJETO, PROTECCION }
     enum class Nombre { BASTON, ESPADA, DAGA, MARTILLO, GARRAS, POCION, IRA, ESCUDO, ARMADURA }
-
     override fun describeContents(): Int {
         return 0
     }
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        TipoArticulo.valueOf(parcel.readString()!!),
+        Nombre.valueOf(parcel.readString()!!),
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt()
+    ) {
 
+    }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeInt(peso)
         parcel.writeString(img)
         parcel.writeInt(unidades)
         parcel.writeInt(valor)
+        parcel.writeString(tipoArticulo.toString())
+        parcel.writeString(nombre.toString())
+    }
+    override fun toString(): String {
+        return "[Tipo Artículo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Unidades:$unidades, Valor:$valor]"
     }
     fun getPeso(): Int {
         return peso
