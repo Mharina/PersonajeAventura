@@ -59,7 +59,8 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
                 val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
                 val valor = cursor.getInt(cursor.getColumnIndex(COLUMN_VALOR))
                 val enum = enumArt()
-                articulos.add(Articulo(id,enum.enuT(tipo), enum.enuN(nombre), peso, img, unidades, valor))            } while (cursor.moveToNext())
+                articulos.add(Articulo(id, enum.enuT(tipo), enum.enuN(nombre), peso, img, unidades, valor))
+            } while (cursor.moveToNext())
         }
         cursor.close()
         db.close()

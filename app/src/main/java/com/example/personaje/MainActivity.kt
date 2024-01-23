@@ -28,30 +28,30 @@ class MainActivity : AppCompatActivity() {
         val dbHelperC = DatabaseHelper2 (this)
         val arrayArticulos = ArrayList<Articulo>()
         val arrayArticulosC = ArrayList<Articulo>()
-        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",1,4))
-        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,4,"arma",1,3))
+        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"arma",1,4))
+        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"arma",1,3))
         arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",2,4))
-        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",1,4))
-        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",5,4))
-        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",2,4))
-        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",7,4))
-        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",1,4))
-        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",8,4))
-        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",3,4))
+        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ARMADURA,3,"defensa",1,4))
+        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ESCUDO,3,"defensa",5,4))
+        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.IRA,3,"utilidad",2,4))
+        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.POCION,3,"utilidad",7,4))
+        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.GARRAS,3,"arma",1,4))
+        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.MARTILLO,3,"arma",8,4))
+        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"arma",3,4))
         for (i in 0..9){
             dbHelperA.insertarArticulo(arrayArticulos[i])
         }
 
-        arrayArticulosC.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",1,4))
-        arrayArticulosC.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,4,"arma",1,3))
-        arrayArticulosC.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",2,4))
-        arrayArticulosC.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",1,4))
-        arrayArticulosC.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"defesa",5,4))
-        arrayArticulosC.add(Articulo(6,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",2,4))
-        arrayArticulosC.add(Articulo(7,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"utilidad",7,4))
-        arrayArticulosC.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",1,4))
-        arrayArticulosC.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",8,4))
-        arrayArticulosC.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"recompensa",3,4))
+        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"arma",1,4))
+        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"arma",1,3))
+        arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"arma",2,4))
+        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ARMADURA,3,"defensa",1,4))
+        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ESCUDO,3,"defensa",5,4))
+        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.IRA,3,"utilidad",2,4))
+        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.POCION,3,"utilidad",7,4))
+        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.ARMA,Articulo.Nombre.GARRAS,3,"arma",1,4))
+        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.ARMA,Articulo.Nombre.MARTILLO,3,"arma",8,4))
+        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"arma",3,4))
         for (i in 0..9){
             dbHelperC.insertarArticulo(arrayArticulosC[i])
         }
@@ -211,7 +211,7 @@ class Mochila(private var pesoMochila: Int){
 }
 
 data class Articulo(
-    private var id: Int,
+    private var id:Int,
     private var tipoArticulo: TipoArticulo,
     private var nombre: Nombre,
     private var peso: Int,
@@ -220,7 +220,7 @@ data class Articulo(
     private var valor: Int
 ): Parcelable {
     enum class TipoArticulo { ARMA, OBJETO, PROTECCION }
-    enum class Nombre { BASTON, ESPADA, DAGA, MARTILLO, GARRAS, POCION, IRA, ESCUDO, ARMADURA }
+    enum class Nombre { BASTON, ESPADA, DAGA, HACHA, MARTILLO, GARRAS, POCION, IRA, ESCUDO, ARMADURA }
     override fun describeContents(): Int {
         return 0
     }
@@ -245,7 +245,7 @@ data class Articulo(
         parcel.writeString(nombre.toString())
     }
     override fun toString(): String {
-        return "[Tipo Artículo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Unidades:$unidades, Valor:$valor]"
+        return "[Id: $id, Tipo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Uds:$unidades, Valor:$valor]"
     }
     fun getPeso(): Int {
         return peso
