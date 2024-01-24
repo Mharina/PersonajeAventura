@@ -28,16 +28,28 @@ class Objeto : AppCompatActivity() {
         url.text = imagen
         foto.setImageResource(ruta)
         nombre.text = artic[num].toString()
+        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
+
+        contenidoMoch?.forEach {
+            if (moch != null) {
+                moch.addArticulo(it)
+            }
+        }
+
         continuar.setOnClickListener{
             var intent = Intent(this@Objeto, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             startActivity(intent)
         }
 
         recoger.setOnClickListener{
             moch!!.addArticulo(artic[num])
             var intent = Intent(this@Objeto, Aventura::class.java)
+            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
             startActivity(intent)

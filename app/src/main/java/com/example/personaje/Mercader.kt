@@ -27,7 +27,13 @@ class Mercader : AppCompatActivity() {
         val arrayArc = arrayArticulos.joinToString("\n")
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
+        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
 
+        contenidoMoch?.forEach {
+            if (moch != null) {
+                moch.addArticulo(it)
+            }
+        }
         continuar.setOnClickListener {
             var intent = Intent(this@Mercader, Aventura::class.java)
             startActivity(intent)

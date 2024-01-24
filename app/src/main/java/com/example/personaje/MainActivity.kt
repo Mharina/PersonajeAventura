@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val dbHelperC = DatabaseHelper2 (this)
         val arrayArticulos = ArrayList<Articulo>()
         val arrayArticulosC = ArrayList<Articulo>()
-        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"espada",1,4))
+        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,4))
         arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,3))
         arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",2,4))
         arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"hacha",3,4))
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             dbHelperA.insertarArticulo(arrayArticulos[i])
         }
 
-        arrayArticulosC.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"espada",1,4))
+        arrayArticulosC.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,4))
         arrayArticulosC.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,3))
         arrayArticulosC.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",2,4))
         arrayArticulosC.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"hacha",3,4))
@@ -175,7 +175,7 @@ class Mochila(private var pesoMochila: Int)
                         Articulo.Nombre.MARTILLO, Articulo.Nombre.GARRAS -> {
                             contenido.add(articulo)
                             this.pesoMochila -= articulo.getPeso()
-                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                            //println("${articulo.getNombre()} ha sido añadido a la mochila.")
                         }
                         else -> println("Nombre del artículo no válido para el tipo ARMA.")
                     }
@@ -185,7 +185,7 @@ class Mochila(private var pesoMochila: Int)
                         Articulo.Nombre.POCION, Articulo.Nombre.IRA -> {
                             contenido.add(articulo)
                             this.pesoMochila -= articulo.getPeso()
-                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                            //println("${articulo.getNombre()} ha sido añadido a la mochila.")
                         }
                         else -> println("Nombre del artículo no válido para el tipo OBJETO.")
                     }
@@ -195,7 +195,7 @@ class Mochila(private var pesoMochila: Int)
                         Articulo.Nombre.ESCUDO, Articulo.Nombre.ARMADURA -> {
                             contenido.add(articulo)
                             this.pesoMochila -= articulo.getPeso()
-                            println("${articulo.getNombre()} ha sido añadido a la mochila.")
+                            //println("${articulo.getNombre()} ha sido añadido a la mochila.")
                         }
                         else -> println("Nombre del artículo no válido para el tipo PROTECCION.")
                     }
@@ -215,7 +215,7 @@ class Mochila(private var pesoMochila: Int)
         return if (contenido.isEmpty()) {
             "Mochila vacía"
         } else {
-            "Artículos en la mochila: ${contenido.joinToString("\n")}"
+            "Artículos en la mochila:\n ${contenido.joinToString("\n")}"
         }
     }
 
@@ -274,7 +274,7 @@ data class Articulo(
     }
     override fun toString(): String {
         //return "[ID: $id, Tipo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Unidades:$unidades, Valor:$valor]"
-        return "[ID: $id, Nombre:$nombre, Peso:$peso, Uds:$unidades, Valor:$valor, Img: $img]"
+        return "[ID: $id, Nombre: $nombre, Peso: $peso, Uds: $unidades, Valor: $valor]"
     }
     fun getPeso(): Int {
         return peso

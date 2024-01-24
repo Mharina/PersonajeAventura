@@ -14,6 +14,13 @@ class Aventura : AppCompatActivity() {
         val dado: ImageButton = findViewById(R.id.imageButton)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
+        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
+
+        contenidoMoch?.forEach {
+            if (moch != null) {
+                moch.addArticulo(it)
+            }
+        }
 
         dado.setOnClickListener{
             var intent = Intent(this@Aventura, Objeto::class.java)
@@ -39,12 +46,18 @@ class Aventura : AppCompatActivity() {
                     var intent = Intent(this@Aventura, Mercader::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
                     startActivity(intent)
                 }
                 1 -> {
                     var intent = Intent(this@Aventura, Objeto::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
                     startActivity(intent)
                 }
             }
