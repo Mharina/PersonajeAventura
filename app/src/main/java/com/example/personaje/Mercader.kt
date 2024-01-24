@@ -21,8 +21,10 @@ class Mercader : AppCompatActivity() {
         val cancela: Button = findViewById(R.id.cancelar)
         val foto: ImageView = findViewById(R.id.imageView)
         val dbHelper2 = DatabaseHelper2(this)
-        val listArtC: List<Articulo> = dbHelper2.getArticulo()
-        val arrayArC = listArtC.joinToString(separator = "\n") { it.toString() }
+//        val listArtC: List<Articulo> = dbHelper2.getArticulo()
+//        val arrayArC = listArtC.joinToString(separator = "\n") { it.toString() }
+        val arrayArticulos = dbHelper2.getArticulo()
+        val arrayArc = arrayArticulos.joinToString("\n")
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
 
@@ -57,7 +59,7 @@ class Mercader : AppCompatActivity() {
                     venta.visibility = View.GONE
                     cancela.visibility = View.GONE
                 }
-                arti.text = "LISTA DE ARTICULOS\n" + arrayArC
+                arti.text = "LISTA DE ARTICULOS\n" + arrayArc
                 arti.visibility = View.VISIBLE
                 foto.visibility = View.GONE
             }
