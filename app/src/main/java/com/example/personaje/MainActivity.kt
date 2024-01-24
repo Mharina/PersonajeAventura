@@ -142,6 +142,11 @@ class MainActivity : AppCompatActivity() {
                     spinnerRaza.selectedItem as String,
                     spinnerClase.selectedItem as String
                 )
+                val mochila = Mochila(
+                    personaje.getPesoMochila()
+
+                )
+                intent.putExtra("mochila", mochila)
                 intent.putExtra("personaje", personaje)
                 intent.putExtra("imagen_id", foto.drawable.toString())
                 startActivity(intent)
@@ -150,8 +155,13 @@ class MainActivity : AppCompatActivity() {
         val OBJETOS_ALEATORIOS = DatabaseHelper(this)
     }
 }
-class Mochila(private var pesoMochila: Int){
+class Mochila(private var pesoMochila: Int)
+    :Parcelable{
     private var contenido=ArrayList<Articulo>()
+
+    constructor(parcel: Parcel) : this(parcel.readInt()) {
+
+    }
 
     fun getPesoMochila():Int{
         return pesoMochila
@@ -208,6 +218,24 @@ class Mochila(private var pesoMochila: Int){
             "Artículos en la mochila: ${contenido.joinToString("\n")}"
         }
     }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(pesoMochila)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Mochila> {
+        override fun createFromParcel(parcel: Parcel): Mochila {
+            return Mochila(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Mochila?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
 
 data class Articulo(
@@ -245,7 +273,7 @@ data class Articulo(
         parcel.writeString(nombre.toString())
     }
     override fun toString(): String {
-        return "[Tipo Artículo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Unidades:$unidades, Valor:$valor]"
+        return "[ID: $id, Tipo:$tipoArticulo, Nombre:$nombre, Peso:$peso, Unidades:$unidades, Valor:$valor]"
     }
     fun getPeso(): Int {
         return peso
@@ -372,6 +400,14 @@ data class Personaje(
 
     fun setClase(clase: String) {
         this.clase = clase
+    }
+
+    fun getPesoMochila(): Int {
+        return pesoMochila
+    }
+
+    fun setPesoMochila(pesoMochila: Int) {
+        this.pesoMochila = pesoMochila
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

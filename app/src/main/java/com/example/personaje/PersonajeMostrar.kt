@@ -13,6 +13,7 @@ class PersonajeMostrar : AppCompatActivity() {
         setContentView(R.layout.activity_personaje_mostrar)
 
         val pj = intent.getParcelableExtra<Personaje>("personaje")
+        val moch = intent.getParcelableExtra<Mochila>("mochila")
 
         val nombre = findViewById<TextView>(R.id.textView5)
         val raza = findViewById<TextView>(R.id.textView7)
@@ -36,6 +37,8 @@ class PersonajeMostrar : AppCompatActivity() {
         }
         btnComenzar.setOnClickListener {
             val intent = Intent(this@PersonajeMostrar, Aventura::class.java)
+            intent.putExtra("personaje", pj)
+            intent.putExtra("mochila", moch)
             startActivity(intent)
         }
     }
