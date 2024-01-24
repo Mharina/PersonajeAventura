@@ -40,6 +40,7 @@ class Mercader : AppCompatActivity() {
                 foto.setImageResource(R.drawable.mercader)
                 comerciar.visibility = View.VISIBLE
                 continuar.visibility = View.VISIBLE
+                foto.visibility = View.VISIBLE
                 arti.visibility = View.GONE
                 compra.visibility = View.GONE
                 venta.visibility = View.GONE
@@ -50,6 +51,7 @@ class Mercader : AppCompatActivity() {
                     foto.setImageResource(R.drawable.mercader)
                     comerciar.visibility = View.VISIBLE
                     continuar.visibility = View.VISIBLE
+                    foto.visibility = View.VISIBLE
                     arti.visibility = View.GONE
                     compra.visibility = View.GONE
                     venta.visibility = View.GONE
@@ -58,8 +60,6 @@ class Mercader : AppCompatActivity() {
                 arti.text = "LISTA DE ARTICULOS\n" + arrayArC
                 arti.visibility = View.VISIBLE
                 foto.visibility = View.GONE
-                var intent = Intent(this@Mercader, Aventura::class.java)
-                startActivity(intent)
             }
             venta.setOnClickListener {
                 cancela.setOnClickListener {

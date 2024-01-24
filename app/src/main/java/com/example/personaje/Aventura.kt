@@ -16,14 +16,14 @@ class Aventura : AppCompatActivity() {
         val moch = intent.getParcelableExtra<Mochila>("mochila")
 
         dado.setOnClickListener{
-            var intent = Intent(this@Aventura, Mercader::class.java)
+            var intent = Intent(this@Aventura, Objeto::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
             startActivity(intent)
-            /*var ale = Random()
-            var num = ale.nextInt(4)
+            var ale = Random()
+            var num = ale.nextInt(2)
             when(num){
-                0 -> {
+                /*0 -> {
                     var intent = Intent(this@Aventura, Ciudad::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
@@ -34,20 +34,20 @@ class Aventura : AppCompatActivity() {
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
                     startActivity(intent)
-                }
-                2 -> {
+                }*/
+                0 -> {
                     var intent = Intent(this@Aventura, Mercader::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
                     startActivity(intent)
                 }
-                3 -> {
+                1 -> {
                     var intent = Intent(this@Aventura, Objeto::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
                     startActivity(intent)
                 }
-            }*/
+            }
         }
     }
 }
