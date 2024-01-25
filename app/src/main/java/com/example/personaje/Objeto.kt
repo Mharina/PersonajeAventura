@@ -33,7 +33,7 @@ class Objeto : AppCompatActivity() {
         if (contenidoMoch != null) {
             contenidoMoch.forEach {
                 if (moch != null) {
-                    moch.addArticulo(it)
+                    moch.actualizarMochila(it)
                 }
             }
         }
@@ -42,9 +42,9 @@ class Objeto : AppCompatActivity() {
             var intent = Intent(this@Objeto, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
-            if (moch != null) {
-                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-            }
+//            if (moch != null) {
+//                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//            }
             startActivity(intent)
         }
 
@@ -59,14 +59,15 @@ class Objeto : AppCompatActivity() {
 //            }
             if (artic[num].getPeso()<=pj!!.getPesoMochila()) {
                 moch!!.addArticulo(artic[num])
-            } else {
-                Toast.makeText(this, "Peso excede del peso TOTAL", Toast.LENGTH_LONG).show()
-            }
                 var intent = Intent(this@Objeto, Aventura::class.java)
                 intent.putParcelableArrayListExtra("contenido", moch?.getContenido())
                 intent.putExtra("personaje", pj)
                 intent.putExtra("mochila", moch)
                 startActivity(intent)
+            } else {
+                Toast.makeText(this, "Peso excede del peso TOTAL", Toast.LENGTH_LONG).show()
+            }
+
 
         }
     }

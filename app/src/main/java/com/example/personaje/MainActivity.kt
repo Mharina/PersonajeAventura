@@ -163,9 +163,9 @@ class Mochila(private var pesoMochila: Int)
 
     }
 
-//    fun getPesoMochila():Int{
-//        return pesoMochila
-//    }
+    fun actualizarMochila(articulo:Articulo){
+        contenido.add(articulo)
+    }
     fun addArticulo(articulo: Articulo) {
         if (articulo.getPeso() <= pesoMochila) {
             when (articulo.getTipoArticulo()) {

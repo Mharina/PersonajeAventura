@@ -31,7 +31,7 @@ class Mercader : AppCompatActivity() {
         if (contenidoMoch != null) {
             contenidoMoch.forEach {
                 if (moch != null) {
-                    moch.addArticulo(it)
+                    moch.actualizarMochila(it)
                 }
             }
         }
