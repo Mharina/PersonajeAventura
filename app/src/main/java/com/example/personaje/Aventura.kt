@@ -13,12 +13,14 @@ class Aventura : AppCompatActivity() {
         setContentView(R.layout.activity_aventura)
         val dado: ImageButton = findViewById(R.id.imageButton)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
-        val moch = intent.getParcelableExtra<Mochila>("mochila")
+        val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
 
-        contenidoMoch?.forEach {
-            if (moch != null) {
-                moch.addArticulo(it)
+        if (contenidoMoch != null) {
+            contenidoMoch.forEach {
+                if (moch != null) {
+                    moch.addArticulo(it)
+                }
             }
         }
 

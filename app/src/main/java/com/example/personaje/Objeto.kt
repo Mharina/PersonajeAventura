@@ -6,33 +6,35 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import java.util.Random
 
 class Objeto : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_objeto)
-        val url = findViewById<TextView>(R.id.texto1)
+
         val nombre = findViewById<TextView>(R.id.texto1)
         val foto = findViewById<ImageView>(R.id.imageView)
         val recoger: Button = findViewById(R.id.button)
         val continuar: Button = findViewById(R.id.button2)
         val dbHelper = DatabaseHelper(this)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
-        val moch = intent.getParcelableExtra<Mochila>("mochila")
         val artic = dbHelper.getArticulo()
         var ale = Random()
         var num = ale.nextInt(10)
         var imagen = artic[num].getImg()
         var ruta = resources.getIdentifier(imagen,"drawable",packageName)
-        url.text = imagen
         foto.setImageResource(ruta)
         nombre.text = artic[num].toString()
+        val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
 
-        contenidoMoch?.forEach {
-            if (moch != null) {
-                moch.addArticulo(it)
+        if (contenidoMoch != null) {
+            contenidoMoch.forEach {
+                if (moch != null) {
+                    moch.addArticulo(it)
+                }
             }
         }
 
@@ -47,12 +49,25 @@ class Objeto : AppCompatActivity() {
         }
 
         recoger.setOnClickListener{
-            moch!!.addArticulo(artic[num])
-            var intent = Intent(this@Objeto, Aventura::class.java)
-            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-            intent.putExtra("personaje", pj)
-            intent.putExtra("mochila", moch)
-            startActivity(intent)
+
+//            var pos = moch?.findObjeto(artic[num].getNombre())
+//            if (pos!=-1){
+//                artic[num].setUnidades(artic[num].getUnidades()+1)
+//                moch!!.addArticulo(artic[num])
+//            } else {
+//                moch!!.addArticulo(artic[num])
+//            }
+            if (artic[num].getPeso()<=pj!!.getPesoMochila()) {
+                moch!!.addArticulo(artic[num])
+            } else {
+                Toast.makeText(this, "Peso excede del peso TOTAL", Toast.LENGTH_LONG).show()
+            }
+                var intent = Intent(this@Objeto, Aventura::class.java)
+                intent.putParcelableArrayListExtra("contenido", moch?.getContenido())
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                startActivity(intent)
+
         }
     }
 }
