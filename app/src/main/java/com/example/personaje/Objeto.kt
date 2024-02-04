@@ -58,7 +58,7 @@ class Objeto : AppCompatActivity() {
 //                moch!!.addArticulo(artic[num])
 //            }
             if (artic[num].getPeso()<=pj!!.getPesoMochila()) {
-                moch!!.addArticulo(artic[num])
+                moch!!.addArticulo(artic[num], 1)
                 var intent = Intent(this@Objeto, Aventura::class.java)
                 intent.putParcelableArrayListExtra("contenido", moch?.getContenido())
                 intent.putExtra("personaje", pj)
