@@ -48,7 +48,13 @@ class enumArt {
             }
             "ARMADURA" ->{
                 return Articulo.Nombre.ARMADURA
-            }else -> return Articulo.Nombre.BASTON
+            }
+            "HACHA" ->{
+                return Articulo.Nombre.HACHA
+            }
+            "MONEDA"->{
+                return Articulo.Nombre.MONEDA
+            } else -> return Articulo.Nombre.BASTON
         }
     }
 }
