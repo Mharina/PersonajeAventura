@@ -26,7 +26,20 @@
         android:src="@drawable/moneda" />
 
     <TextView
-        android:id="@+id/texto1"
+        android:id="@+id/pesoLibre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:background="#80000000"
+        android:paddingLeft="5dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="italic"/>
+
+    <TextView
+        android:id="@+id/objMostrado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

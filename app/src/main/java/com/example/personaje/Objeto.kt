@@ -1,5 +1,6 @@
 package com.example.personaje
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +11,13 @@ import android.widget.Toast
 import java.util.Random
 
 class Objeto : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_objeto)
 
-        val nombre = findViewById<TextView>(R.id.texto1)
+        val nombre = findViewById<TextView>(R.id.objMostrado)
+        val peso = findViewById<TextView>(R.id.pesoLibre)
         val foto = findViewById<ImageView>(R.id.imageView)
         val recoger: Button = findViewById(R.id.button)
         val continuar: Button = findViewById(R.id.button2)
@@ -29,6 +32,7 @@ class Objeto : AppCompatActivity() {
         nombre.text = artic[num].toString()
         val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
+        peso.text = "Tienes un peso de ${moch!!.getPesoMochila().toString()} libre"
 
         if (contenidoMoch != null) {
             contenidoMoch.forEach {

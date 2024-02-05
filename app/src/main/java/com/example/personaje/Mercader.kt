@@ -15,7 +15,6 @@ class Mercader : AppCompatActivity() {
     val unidadMaxima = 10
     val unidadMinima = 0
     private lateinit var rest: ImageButton
-    private lateinit var uds: TextView
     private lateinit var sum: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +28,9 @@ class Mercader : AppCompatActivity() {
         val foto: ImageView = findViewById(R.id.imageView)
         val dbHelper2 = DatabaseHelper2(this)
         val arrayArticulos = dbHelper2.getArticulo()
-        var rest: ImageButton = findViewById(R.id.buttonRestar)
+        rest = findViewById(R.id.buttonRestar)
         var uds: TextView = findViewById(R.id.udsText)
-        var sum: ImageButton = findViewById(R.id.buttonRestar)
+        sum = findViewById(R.id.buttonRestar)
         val arrayArc = arrayArticulos.joinToString("\n")
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
