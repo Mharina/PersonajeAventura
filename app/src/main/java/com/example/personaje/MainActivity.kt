@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
         val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
         val foto: ImageView = findViewById(R.id.imageView)
-//        val dbHelperA = DatabaseHelper (this)
-//        val dbHelperC = DatabaseHelper2 (this)
+        val dbHelperA = DatabaseHelper (this)
+        val dbHelperC = DatabaseHelper2 (this)
 //        val arrayArticulos = ArrayList<Articulo>()
 //        val arrayArticulosC = ArrayList<Articulo>()
-
+//
 //        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,9))
 //        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,22))
 //        arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",1,8))
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 //        for (i in 0..9){
 //            dbHelperC.insertarArticulo(arrayArticulosC[i])
 //        }
-
-
+        dbHelperC.recreaTabla()
+        dbHelperA.recreaTabla()
 
         val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
         val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
@@ -137,18 +137,20 @@ class MainActivity : AppCompatActivity() {
                 nombre.setError("El campo nombre es necesario")
             } else {
                 val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+
                 val personaje = Personaje(
                     nombre.text.toString(),
-                    10,
                     spinnerEstadoVital.selectedItem as String,
                     spinnerRaza.selectedItem as String,
                     spinnerClase.selectedItem as String
                 )
-                val mochila = Mochila(
-                    personaje.getPesoMochila()
 
-                )
-                intent.putExtra("mochila", mochila)
+//                val mochila = Mochila(
+//                    personaje.getPesoMochila()
+//
+//                )
+
+                intent.putExtra("mochila", personaje.getMochila())
                 intent.putExtra("personaje", personaje)
                 intent.putExtra("imagen_id", foto.drawable.toString())
                 startActivity(intent)
@@ -163,6 +165,9 @@ class Mochila(private var pesoMochila: Int)
 
     constructor(parcel: Parcel) : this(parcel.readInt()) {
 
+    }
+    fun getPesoMochila():Int{
+        return pesoMochila
     }
 
     fun actualizarMochila(articulo:Articulo){
@@ -528,17 +533,16 @@ data class Articulo(
 }
 data class Personaje(
     private var nombre: String,
-    private var pesoMochila: Int,
     private var estadoVital: String,
     private var raza: String,
     private var clase: String,
 
     ): Parcelable {
     var monedero = HashMap<Int, Int>()
+    private val mochila = Mochila(5)
 
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
-        parcel.readInt(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString()
@@ -586,17 +590,17 @@ data class Personaje(
         this.clase = clase
     }
 
-    fun getPesoMochila(): Int {
-        return pesoMochila
+//    fun getPesoMochila(): Int {
+//        return pesoMochila
+//    }
+
+    fun getMochila() : Mochila {
+        return this.mochila
     }
 
-    fun setPesoMochila(pesoMochila: Int) {
-        this.pesoMochila = pesoMochila
-    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nombre)
-        parcel.writeInt(pesoMochila)
         parcel.writeString(estadoVital)
         parcel.writeString(raza)
         parcel.writeString(clase)

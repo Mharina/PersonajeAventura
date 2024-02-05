@@ -66,4 +66,26 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
         db.close()
         return articulos
     }
+    fun recreaTabla(){
+        val db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS ${DatabaseHelper.TABLA_OBJETOS}")
+        onCreate(db)
+
+        val arrayArticulos = ArrayList<Articulo>()
+
+        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,9))
+        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,22))
+        arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",1,8))
+        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"hacha",1,4))
+        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.GARRAS,3,"garras",1,6))
+        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.MARTILLO,3,"martillo",1,13))
+        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ESCUDO,3,"escudo",1,11))
+        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ARMADURA,3,"armadura",1,5))
+        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.IRA,3,"ira",1,40))
+        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.POCION,3,"pocion",1,5))
+        arrayArticulos.add(Articulo(11,Articulo.TipoArticulo.ORO,Articulo.Nombre.MONEDA,0,"oro",1,15))
+        for (i in 0..10){
+            insertarArticulo(arrayArticulos[i])
+        }
+    }
 }
