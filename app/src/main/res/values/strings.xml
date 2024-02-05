@@ -23,4 +23,15 @@
     <string name="clase">Clase</string>
     <string name="estado_vital">Estado Vital</string>
     <string name="proximamente">PROXIMAMENTE</string>
+    <string name="uno">1</string>
+    <string name="comerciar">Comerciar</string>
+    <string name="continuar">Continuar</string>
+    <string name="restar">Restar</string>
+    <string name="sumar">Sumar</string>
+    <string name="resta">Restar</string>
+    <string name="todo">TODO</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="compra">Compra</string>
+    <string name="todos">TODO</string>
+    <string name="venta">Venta</string>
 </resources>

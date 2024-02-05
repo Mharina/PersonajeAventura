@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/objeto" />
+        android:src="@drawable/moneda" />
 
     <TextView
         android:id="@+id/texto1"

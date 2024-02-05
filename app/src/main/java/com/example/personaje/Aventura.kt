@@ -26,7 +26,7 @@ class Aventura : AppCompatActivity() {
 
         dado.setOnClickListener{
             var ale = Random()
-            var num = ale.nextInt(1)
+            var num = ale.nextInt(2)
             when(num){
                 3 -> {
                     var intent = Intent(this@Aventura, Ciudad::class.java)

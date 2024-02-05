@@ -22,7 +22,7 @@ class Objeto : AppCompatActivity() {
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val artic = dbHelper.getArticulo()
         var ale = Random()
-        var num = ale.nextInt(10)
+        var num = ale.nextInt(11)
         var imagen = artic[num].getImg()
         var ruta = resources.getIdentifier(imagen,"drawable",packageName)
         foto.setImageResource(ruta)
@@ -42,9 +42,9 @@ class Objeto : AppCompatActivity() {
             var intent = Intent(this@Objeto, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
-//            if (moch != null) {
-//                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//            }
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             startActivity(intent)
         }
 
@@ -65,7 +65,7 @@ class Objeto : AppCompatActivity() {
                 intent.putExtra("mochila", moch)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Peso excede del peso TOTAL", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Peso excede del peso TOTAL\tTienes ${moch.getPesoMochila()} libre.", Toast.LENGTH_LONG).show()
             }
 
 

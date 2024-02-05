@@ -24,9 +24,10 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/mercader" />
+            android:src="@drawable/mercader"
+            android:contentDescription="@string/todos" />
 
         <TextView
             android:id="@+id/art"
@@ -47,29 +48,31 @@
 
             <Button
                 android:id="@+id/button"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
-                android:text="Comerciar"
+                android:text="@string/comerciar"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/button2"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
-                android:text="Continuar"
+                android:text="@string/continuar"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/compra"
@@ -79,11 +82,12 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
-                android:text="Compra"
+                android:text="@string/compra"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:visibility="gone"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/venta"
@@ -91,13 +95,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="5dp"
+                android:text="@string/venta"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
-                android:text="Venta"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
                 android:visibility="gone"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/cancelar"
@@ -107,12 +112,68 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
-                android:text="Cancelar"
+                android:text="@string/cancelar"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:visibility="gone"
+                tools:ignore="TextContrastCheck"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Uds"
+            android:layout_width="176dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonRestar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="0"
+                android:backgroundTint="#80000000"
+                android:contentDescription="@string/restar"
+                android:scaleType="centerCrop"
+                android:src="@drawable/restar"
+                android:text="@string/sumar"
+                android:textColor="#FFFFFF"
+                android:visibility="visible"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/udsText"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="0"
+                android:background="#80000000"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:text="@string/uno"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:visibility="visible"
+                tools:ignore="RtlSymmetry,TextContrastCheck" />
+
+            <ImageButton
+                android:id="@+id/buttonSumar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:backgroundTint="#80000000"
+                android:contentDescription="@string/todo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sumar"
+                android:text="@string/resta"
+                android:textColor="#FFFFFF"
+                android:visibility="visible"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
+
+
 
     </LinearLayout>
 </ScrollView>

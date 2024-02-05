@@ -539,7 +539,7 @@ data class Personaje(
 
     ): Parcelable {
     var monedero = HashMap<Int, Int>()
-    private val mochila = Mochila(5)
+    private val mochila = Mochila(44)
 
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
