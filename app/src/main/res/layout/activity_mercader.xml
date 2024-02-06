@@ -133,13 +133,13 @@
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="0"
-                android:backgroundTint="#80000000"
+                android:backgroundTint="#00000000"
                 android:contentDescription="@string/restar"
                 android:scaleType="centerCrop"
                 android:src="@drawable/restar"
                 android:text="@string/sumar"
                 android:textColor="#FFFFFF"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -155,7 +155,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="RtlSymmetry,TextContrastCheck" />
 
             <ImageButton
@@ -163,13 +163,13 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_weight="0"
-                android:backgroundTint="#80000000"
+                android:backgroundTint="#00000000"
                 android:contentDescription="@string/todo"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sumar"
                 android:text="@string/resta"
                 android:textColor="#FFFFFF"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
