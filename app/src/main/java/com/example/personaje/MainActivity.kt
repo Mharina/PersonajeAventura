@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val foto: ImageView = findViewById(R.id.imageView)
         val dbHelperA = DatabaseHelper (this)
         val dbHelperC = DatabaseHelper2 (this)
+        val dbHelperM = DatabaseEnemigo (this)
 //        val arrayArticulos = ArrayList<Articulo>()
 //        val arrayArticulosC = ArrayList<Articulo>()
 //
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 //        }
         dbHelperC.recreaTabla()
         dbHelperA.recreaTabla()
+        dbHelperM.recreaTabla()
 
         val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
         val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
@@ -540,6 +542,12 @@ data class Personaje(
     ): Parcelable {
     var monedero = HashMap<Int, Int>()
     private val mochila = Mochila(44)
+    private var salud: Int = 0
+    private var ataque: Int = 0
+    private var experiencia: Int
+    private var nivel: Int
+    private var suerte: Int
+    private var defensa: Int = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -556,6 +564,12 @@ data class Personaje(
         monedero.put(10, 0)
         monedero.put(25, 0)
         monedero.put(100, 0)
+        calcularSalud()
+        calcularAtaque()
+        calcularDefensa()
+        experiencia = 0
+        nivel = 1
+        suerte = (0..10).random()
     }
 
     fun getNombre(): String {
@@ -597,6 +611,85 @@ data class Personaje(
     fun getMochila() : Mochila {
         return this.mochila
     }
+    fun getExperiencia(): Int {
+        return experiencia
+    }
+    fun setExperiencia(experienciaGanada: Int) {
+        experiencia += experienciaGanada
+        while (experiencia >= 1000) {
+            subirNivel()
+            experiencia -= 1000 // Reducir la experiencia en 1000 al subir de nivel
+        }
+    }
+    fun getNivel(): Int {
+        return nivel
+    }
+    fun getSalud(): Int{
+        return salud
+    }
+    fun getAtaque(): Int{
+        return ataque
+    }
+    fun getSuerte(): Int{
+        return suerte
+    }
+    fun getDefensa(): Int{
+        return defensa
+    }
+    fun subirNivel() {
+        if (nivel < 10) { // Limitar el nivel a 10
+            nivel++
+            calcularSalud() // Calcular el nuevo valor de salud al subir de nivel
+            calcularAtaque() // Calcular el nuevo valor de ataque al subir de nivel
+            calcularDefensa()
+        }
+    }
+    fun calcularSalud() {
+        salud = when (nivel) {
+            1 -> 100
+            2 -> 200
+            3 -> 300
+            4 -> 450
+            5 -> 600
+            6 -> 800
+            7 -> 1000
+            8 -> 1250
+            9 -> 1500
+            10 -> 2000
+            else -> 100 // Valor por defecto si el nivel está fuera del rango especificado
+        }
+    }
+
+    private fun calcularAtaque() {
+        ataque = when (nivel) {
+            1 -> 10
+            2 -> 20
+            3 -> 25
+            4 -> 30
+            5 -> 40
+            6 -> 100
+            7 -> 200
+            8 -> 350
+            9 -> 400
+            10 -> 450
+            else -> 10 // Valor por defecto si el nivel está fuera del rango especificado
+        }
+    }
+    private fun calcularDefensa() {
+        defensa = when (nivel) {
+            1 -> 4
+            2 -> 9
+            3 -> 14
+            4 -> 19
+            5 -> 49
+            6 -> 59
+            7 -> 119
+            8 -> 199
+            9 -> 349
+            10 -> 399
+            else -> 4 // Valor por defecto si el nivel está fuera del rango especificado
+        }
+    }
 
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -619,4 +712,75 @@ data class Personaje(
             return arrayOfNulls(size)
         }
     }
+}
+class Monstruo(
+    private var nombre: String,
+    private var nivel: Int
+) {
+    private var salud: Int = 0
+    private var ataque: Int = 0
+
+    init {
+        calcularSalud() // Inicializar la salud según el nivel al nivel 1
+        calcularAtaque() // Inicializar el ataque según el nivel al nivel 1
+    }
+
+    fun getNombre(): String {
+        return nombre
+    }
+    fun setNombre(nuevoNombre:String) {
+        nombre = nuevoNombre
+    }
+    fun getNivel(): Int {
+        return nivel
+    }
+    fun setNivel(nuevoNivel:Int) {
+        nivel = nuevoNivel
+    }
+    fun getSalud(): Int {
+        return salud
+    }
+    fun setSalud(nuevaSalud: Int) {
+        salud = nuevaSalud
+    }
+    fun getAtaque(): Int {
+        return ataque
+    }
+    fun setAtaque(nuevoAtaque: Int) {
+        ataque = nuevoAtaque
+    }
+    private fun calcularSalud() {
+        salud = when (nivel) {
+            1 -> 100
+            2 -> 125
+            3 -> 150
+            4 -> 200
+            5 -> 250
+            6 -> 350
+            7 -> 400
+            8 -> 600
+            9 -> 800
+            10 -> 1000
+            else -> 100 // Valor por defecto si el nivel está fuera del rango especificado
+        }
+    }
+    private fun calcularAtaque() {
+        ataque = when (nivel) {
+            1 -> 5
+            2 -> 10
+            3 -> 15
+            4 -> 20
+            5 -> 50
+            6 -> 60
+            7 -> 120
+            8 -> 200
+            9 -> 350
+            10 -> 400
+            else -> 5 // Valor por defecto si el nivel está fuera del rango especificado
+        }
+    }
+    override fun toString(): String {
+        return "Monstruo: Nombre: $nombre, Nivel: $nivel, Salud: $salud, Ataque: $ataque"
+    }
+
 }

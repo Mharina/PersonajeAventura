@@ -13,7 +13,7 @@ import java.util.Random
 class Mercader : AppCompatActivity() {
     var unidades = 1
     val unidadMaxima = 10
-    val unidadMinima = 0
+    val unidadMinima = 1
     private lateinit var rest: ImageButton
     private lateinit var sum: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class Mercader : AppCompatActivity() {
         val arrayArticulos = dbHelper2.getArticulo()
         rest = findViewById(R.id.buttonRestar)
         var uds: TextView = findViewById(R.id.udsText)
-        sum = findViewById(R.id.buttonRestar)
+        sum = findViewById(R.id.buttonSumar)
         val arrayArc = arrayArticulos.joinToString("\n")
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
@@ -86,6 +86,7 @@ class Mercader : AppCompatActivity() {
                     sum.visibility = View.INVISIBLE
                     uds.visibility = View.INVISIBLE
                 }
+                actualizarBotones()
                 var ale = Random()
                 var num = ale.nextInt(10)
                 var imagen = arrayArticulos[num].getImg()
@@ -126,6 +127,7 @@ class Mercader : AppCompatActivity() {
                     sum.visibility = View.INVISIBLE
                     uds.visibility = View.INVISIBLE
                 }
+                actualizarBotones()
                 arti.visibility = View.VISIBLE
                 foto.setImageResource(R.drawable.mochila)
                 foto.visibility = View.VISIBLE
