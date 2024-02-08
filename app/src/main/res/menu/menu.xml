@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Personaje"
+        android:id="@+id/personaje"
+        />
+    <item android:title="Mochila"
+        android:id="@+id/mochila"
+        />
+    <item android:title="Libro"
+        android:id="@+id/libro"
+        />
+    <item android:title="Guardar"
+        android:id="@+id/guardar"
+        />
+    <item android:title="Guardar y salir"
+        android:id="@+id/guardar_salir"
+        />
+    <item android:title="Salir"
+        android:id="@+id/salir"
+
+        />
+</menu>

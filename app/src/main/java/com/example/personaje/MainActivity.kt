@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -158,7 +161,45 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        val OBJETOS_ALEATORIOS = DatabaseHelper(this)
+
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        when(item.itemId){
+            R.id.personaje->{
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
+            }
+            R.id.mochila->{
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
+            }
+            R.id.libro->{
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
+            }
+            R.id.guardar->{
+
+                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
+            }
+            R.id.guardar_salir->{
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
+            }
+            R.id.salir->{
+                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 class Mochila(private var pesoMochila: Int)
@@ -546,7 +587,6 @@ data class Personaje(
     private var ataque: Int = 0
     private var experiencia: Int
     private var nivel: Int
-    private var suerte: Int
     private var defensa: Int = 0
 
     constructor(parcel: Parcel) : this(
@@ -569,7 +609,6 @@ data class Personaje(
         calcularDefensa()
         experiencia = 0
         nivel = 1
-        suerte = (0..10).random()
     }
 
     fun getNombre(): String {
@@ -587,7 +626,9 @@ data class Personaje(
     fun setEstadoVital(estadoVital: String) {
         this.estadoVital = estadoVital
     }
-
+    fun setAtaque(ataque: Int){
+        this.ataque=ataque
+    }
     fun getRaza(): String {
         return raza
     }
@@ -630,11 +671,11 @@ data class Personaje(
     fun getAtaque(): Int{
         return ataque
     }
-    fun getSuerte(): Int{
-        return suerte
-    }
     fun getDefensa(): Int{
         return defensa
+    }
+    fun setDefensa(defensa:Int){
+        this.defensa=defensa
     }
     fun subirNivel() {
         if (nivel < 10) { // Limitar el nivel a 10
@@ -660,7 +701,7 @@ data class Personaje(
         }
     }
 
-    private fun calcularAtaque() {
+    fun calcularAtaque() {
         ataque = when (nivel) {
             1 -> 10
             2 -> 20
@@ -675,7 +716,7 @@ data class Personaje(
             else -> 10 // Valor por defecto si el nivel está fuera del rango especificado
         }
     }
-    private fun calcularDefensa() {
+    fun calcularDefensa() {
         defensa = when (nivel) {
             1 -> 4
             2 -> 9
@@ -690,7 +731,6 @@ data class Personaje(
             else -> 4 // Valor por defecto si el nivel está fuera del rango especificado
         }
     }
-
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nombre)
