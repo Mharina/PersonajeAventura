@@ -2,6 +2,7 @@ package com.example.personaje
 
 import android.content.Intent
 import android.graphics.Color
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
@@ -13,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
@@ -27,40 +29,12 @@ class MainActivity : AppCompatActivity() {
         val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
         val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
         val foto: ImageView = findViewById(R.id.imageView)
+        val musica: ImageButton = findViewById(R.id.imageButton2)
         val dbHelperA = DatabaseHelper (this)
         val dbHelperC = DatabaseHelper2 (this)
         val dbHelperM = DatabaseEnemigo (this)
-//        val arrayArticulos = ArrayList<Articulo>()
-//        val arrayArticulosC = ArrayList<Articulo>()
-//
-//        arrayArticulos.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,9))
-//        arrayArticulos.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,22))
-//        arrayArticulos.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",1,8))
-//        arrayArticulos.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"hacha",1,4))
-//        arrayArticulos.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.GARRAS,3,"garras",1,6))
-//        arrayArticulos.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.MARTILLO,3,"martillo",1,13))
-//        arrayArticulos.add(Articulo(6,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ESCUDO,3,"escudo",1,11))
-//        arrayArticulos.add(Articulo(7,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ARMADURA,3,"armadura",1,5))
-//        arrayArticulos.add(Articulo(8,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.IRA,3,"ira",1,40))
-//        arrayArticulos.add(Articulo(9,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.POCION,3,"pocion",1,5))
-//        arrayArticulos.add(Articulo(11,Articulo.TipoArticulo.ORO,Articulo.Nombre.MONEDA,0,"oro",1,15))
-//        for (i in 0..10){
-//            dbHelperA.insertarArticulo(arrayArticulos[i])
-//        }
+        var mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
 
-//        arrayArticulosC.add(Articulo(1,Articulo.TipoArticulo.ARMA,Articulo.Nombre.DAGA,3,"daga",1,4))
-//        arrayArticulosC.add(Articulo(2,Articulo.TipoArticulo.ARMA,Articulo.Nombre.BASTON,4,"baston",1,3))
-//        arrayArticulosC.add(Articulo(3,Articulo.TipoArticulo.ARMA,Articulo.Nombre.ESPADA,3,"espada",2,4))
-//        arrayArticulosC.add(Articulo(10,Articulo.TipoArticulo.ARMA,Articulo.Nombre.HACHA,3,"hacha",3,4))
-//        arrayArticulosC.add(Articulo(4,Articulo.TipoArticulo.ARMA,Articulo.Nombre.GARRAS,3,"garras",1,4))
-//        arrayArticulosC.add(Articulo(5,Articulo.TipoArticulo.ARMA,Articulo.Nombre.MARTILLO,3,"martillo",5,4))
-//        arrayArticulosC.add(Articulo(6,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ESCUDO,3,"escudo",2,4))
-//        arrayArticulosC.add(Articulo(7,Articulo.TipoArticulo.PROTECCION,Articulo.Nombre.ARMADURA,3,"armadura",7,4))
-//        arrayArticulosC.add(Articulo(8,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.IRA,3,"ira",1,4))
-//        arrayArticulosC.add(Articulo(9,Articulo.TipoArticulo.OBJETO,Articulo.Nombre.POCION,3,"pocion",8,4))
-//        for (i in 0..9){
-//            dbHelperC.insertarArticulo(arrayArticulosC[i])
-//        }
         dbHelperC.recreaTabla()
         dbHelperA.recreaTabla()
         dbHelperM.recreaTabla()
@@ -134,6 +108,18 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+        mp.start()
+        musica.setOnClickListener {
+            if(mp.isPlaying){
+                mp.stop()
+                musica.setImageResource(R.drawable.sin_sonido)
+            }else{
+                musica.setImageResource(R.drawable.herramienta_de_audio_con_altavoz)
+                mp= MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
+                mp.start()
+            }
+        }
+
         val button: Button = findViewById(R.id.button)
 
         button.setOnClickListener {
@@ -158,6 +144,9 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("mochila", personaje.getMochila())
                 intent.putExtra("personaje", personaje)
                 intent.putExtra("imagen_id", foto.drawable.toString())
+                if(mp.isPlaying){
+                    mp.stop()
+                }
                 startActivity(intent)
             }
         }

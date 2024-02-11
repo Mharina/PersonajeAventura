@@ -2,34 +2,52 @@ package com.example.personaje
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import java.util.Random
 
 class Enemigo : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enemigo)
         val huir: Button = findViewById(R.id.button2)
         val luchar: Button = findViewById(R.id.button)
-        var vidapj: TextView = findViewById(R.id.textView12)
-        var vidam: TextView = findViewById(R.id.textView13)
+        val vidapj: TextView = findViewById(R.id.textView12)
+        val vidam: TextView = findViewById(R.id.textView13)
         val habilidad: Button = findViewById(R.id.button5)
         val atacar: Button = findViewById(R.id.button3)
         val inventario: Button = findViewById(R.id.button4)
-        var texto1: TextView = findViewById(R.id.textView14)
-        var texto2: TextView = findViewById(R.id.textView15)
+        val texto1: TextView = findViewById(R.id.textView14)
+        val texto2: TextView = findViewById(R.id.textView15)
+        val musica: ImageButton = findViewById(R.id.imageButton2)
+        val pocion: ImageButton = findViewById(R.id.imageButton3)
+        val ira: ImageButton = findViewById(R.id.imageButton4)
+        val textPocion: TextView = findViewById(R.id.textView)
+        val textIra: TextView = findViewById(R.id.textView16)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
         val dbHelper3 = DatabaseEnemigo(this)
         val arrayMonstruo = dbHelper3.getMonstruo()
         var num = 0
+        var mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+        mp.start()
+        musica.setOnClickListener {
+            if(mp.isPlaying){
+                mp.stop()
+                musica.setImageResource(R.drawable.sin_sonido)
+            }else{
+                musica.setImageResource(R.drawable.herramienta_de_audio_con_altavoz)
+                mp= MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+                mp.start()
+            }
+        }
         if ((pj!!.getNivel() + 2) <= 10) {
             num = (1..(pj!!.getNivel() + 2)).random()
         } else {
@@ -49,96 +67,103 @@ class Enemigo : AppCompatActivity() {
         luchar.setOnClickListener {
             luchar.visibility = View.GONE
             huir.visibility = View.GONE
+            pocion.visibility = View.GONE
+            textPocion.visibility = View.GONE
+            ira.visibility = View.GONE
+            textIra.visibility = View.GONE
             habilidad.visibility = View.VISIBLE
             atacar.visibility = View.VISIBLE
             inventario.visibility = View.VISIBLE
             var expGanada = monstruo.getSalud()
-            var salir = false
             var hab = false
-            var evasion: Double
-            evasion = (1..(10)).random()+(pj.getNivel()*0.1)
-            while (vidaMonstruo > 0 && vidaPersonaje > 0) {
-                habilidad.setOnClickListener {
-                    if (!hab) {
-                        when (pj.getClase()) {
-                            "Mago" -> {
-                                pj.calcularSalud()
-                                vidaPersonaje = pj.getSalud()
-                                texto1.text =
-                                    "${pj.getNombre()} utiliza su habilidad de Mago para restaurar su salud."
-                                hab = true
-                            }
+            var evasion: Double = (1..(10)).random()+(pj.getNivel()*0.1)
 
-                            "Brujo" -> {
-                                pj.setAtaque(pj.getAtaque() * 2)
-                                texto1.text =
-                                    "${pj.getNombre()} utiliza su habilidad de Brujo para duplicar su ataque."
-                                hab = true
-                            }
-
-                            "Guerrero" -> {
-                                pj.setDefensa(pj.getDefensa() * 2)
-                                texto1.text =
-                                    "${pj.getNombre()} utiliza su habilidad de Guerrero para duplicar su suerte."
-                                hab = true
-                            }
+            habilidad.setOnClickListener {
+                pocion.visibility = View.GONE
+                textPocion.visibility = View.GONE
+                ira.visibility = View.GONE
+                textIra.visibility = View.GONE
+                if (!hab) {
+                    when (pj.getClase()) {
+                        "Mago" -> {
+                            pj.calcularSalud()
+                            vidaPersonaje = pj.getSalud()
+                            texto1.text = "${pj.getNombre()} utiliza su habilidad de Mago para restaurar su salud."
+                            hab = true
                         }
-                    } else {
-                        Toast.makeText(
-                            this,
-                            "Ya has activado la habilidad, no puedes volver ha hacerlo este turno",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-                val ataqueMonstruo = if (evasion >= 5) 0 else monstruo.getAtaque()
 
-                // Aplicar la defensa del personaje
-                val defensaPersonaje = pj.getDefensa()
-                val danoMonstruo = if (evasion >= 5) 0 else ataqueMonstruo - defensaPersonaje
-
-                if (evasion<5) {
-                    vidaPersonaje -= danoMonstruo
-                }
-                texto1.visibility = View.VISIBLE
-                texto1.visibility = View.VISIBLE
-                texto1.text = "${pj.getNombre()} tiene una suerte de ${evasion} y una defensa de ${defensaPersonaje}."
-                texto2.text = "${pj.getNombre()} ha recibido ${danoMonstruo} de daño. Salud de ${pj.getNombre()}: ${vidaPersonaje}"
-
-                if (vidaMonstruo > 0) {
-                    atacar.setOnClickListener {
-                        vidaMonstruo -= pj.getAtaque()
-                        vidam.text = "Vida: ${vidaMonstruo} Nivel: ${monstruo.getNivel()}"
-                        texto1.text =
-                            "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: ${vidaMonstruo}"
-                        if (vidaMonstruo <= 0) {
-                            pj.setExperiencia(expGanada)
-                            texto1.text =
-                                "${pj.getNombre()} ha derrotado al ${monstruo.getNombre()} y gana ${expGanada} de experiencia."
-                            salir = true
-                            var intent = Intent(this@Enemigo, Proximamente::class.java)
-                            intent.putExtra("personaje", pj)
-                            intent.putExtra("mochila", moch)
-                            startActivity(intent)
+                        "Brujo" -> {
+                            pj.setAtaque(pj.getAtaque() * 2)
+                            texto1.text = "${pj.getNombre()} utiliza su habilidad de Brujo para duplicar su ataque."
+                            hab = true
                         }
-                        vidaPersonaje -= ataqueMonstruo
-                        vidapj.text = "Vida: ${vidaPersonaje} Nivel: ${pj?.getNivel()}"
-                        if (vidaPersonaje <= 0) {
-                            pj.setExperiencia(expGanada)
-                            salir = true
-                            texto1.text = "${pj.getNombre()} has muerto."
-                            var intent = Intent(this@Enemigo, MainActivity::class.java)
-                            startActivity(intent)
-                        }
-                        texto2.text =
-                            "${monstruo.getNombre()} ataca a ${pj.getNombre()}. Salud de ${pj.getNombre()}: ${vidaPersonaje}"
-                        pj.calcularAtaque()
-                        pj.calcularDefensa()
-                    }
-                    inventario.setOnClickListener {
 
+                        "Guerrero" -> {
+                            pj.setDefensa(pj.getDefensa() * 2)
+                            texto1.text = "${pj.getNombre()} utiliza su habilidad de Guerrero para duplicar su suerte."
+                            hab = true
+                        }
                     }
+                } else {
+                        Toast.makeText(this, "Ya has activado la habilidad, no puedes volver ha hacerlo este turno", Toast.LENGTH_LONG).show()
                 }
+            }
+            val ataqueMonstruo = if (evasion >= 5) 0 else monstruo.getAtaque()
+
+            // Aplicar la defensa del personaje
+            val defensaPersonaje = pj.getDefensa()
+            val danoMonstruo = if (evasion >= 5) 0 else ataqueMonstruo - defensaPersonaje
+
+            if (evasion<5) {
+                vidaPersonaje -= danoMonstruo
+            }
+            texto1.visibility = View.VISIBLE
+            texto1.visibility = View.VISIBLE
+            texto1.text = "${pj.getNombre()} tiene una suerte de $evasion y una defensa de ${defensaPersonaje}."
+            texto2.text = "${pj.getNombre()} ha recibido $danoMonstruo de daño. Salud de ${pj.getNombre()}: $vidaPersonaje"
+
+            atacar.setOnClickListener {
+                pocion.visibility = View.GONE
+                textPocion.visibility = View.GONE
+                ira.visibility = View.GONE
+                textIra.visibility = View.GONE
+                vidaMonstruo -= pj.getAtaque()
+                texto1.text = "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: $vidaMonstruo"
+                if (vidaMonstruo <= 0) {
+                    pj.setExperiencia(expGanada)
+                    texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
+                    val intent = Intent(this@Enemigo, MainActivity::class.java)
+                    startActivity(intent)
+                    mp.stop()
+                }
+                vidam.text = "Vida: $vidaMonstruo Nivel: ${monstruo.getNivel()}"
+                vidaPersonaje -= ataqueMonstruo
+                if (vidaPersonaje <= 0) {
+                    texto1.text = "${pj.getNombre()} has muerto."
+                    val intent = Intent(this@Enemigo, MainActivity::class.java)
+                    startActivity(intent)
+                    mp.stop()
+                }
+                vidapj.text = "Vida: ${vidaPersonaje} Nivel: ${pj?.getNivel()}"
+                texto2.text = "${monstruo.getNombre()} ataca a ${pj.getNombre()}. Salud de ${pj.getNombre()}: $vidaPersonaje"
+                pj.calcularAtaque()
+                pj.calcularDefensa()
+            }
+            inventario.setOnClickListener {
+                if (moch!!.findObjeto(Articulo.Nombre.POCION)!=-1){
+                    textPocion.text = "${moch.getContenido()[moch!!.findObjeto(Articulo.Nombre.POCION)].getUnidades()}"
+                }else{
+                    textPocion.text = "0"
+                }
+                if (moch!!.findObjeto(Articulo.Nombre.IRA)!=-1){
+                    textIra.text = "${moch.getContenido()[moch!!.findObjeto(Articulo.Nombre.IRA)].getUnidades()}"
+                }else{
+                    textIra.text = "0"
+                }
+                pocion.visibility = View.VISIBLE
+                textPocion.visibility = View.VISIBLE
+                ira.visibility = View.VISIBLE
+                textIra.visibility = View.VISIBLE
             }
         }
     }
