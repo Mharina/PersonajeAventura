@@ -135,12 +135,6 @@ class MainActivity : AppCompatActivity() {
                     spinnerRaza.selectedItem as String,
                     spinnerClase.selectedItem as String
                 )
-
-//                val mochila = Mochila(
-//                    personaje.getPesoMochila()
-//
-//                )
-
                 intent.putExtra("mochila", personaje.getMochila())
                 intent.putExtra("personaje", personaje)
                 intent.putExtra("imagen_id", foto.drawable.toString())
@@ -570,7 +564,6 @@ data class Personaje(
     private var clase: String,
 
     ): Parcelable {
-    var monedero = HashMap<Int, Int>()
     private val mochila = Mochila(44)
     private var salud: Int = 0
     private var ataque: Int = 0
@@ -588,11 +581,6 @@ data class Personaje(
     }
 
     init {
-        monedero.put(1, 0)
-        monedero.put(5, 0)
-        monedero.put(10, 0)
-        monedero.put(25, 0)
-        monedero.put(100, 0)
         calcularSalud()
         calcularAtaque()
         calcularDefensa()

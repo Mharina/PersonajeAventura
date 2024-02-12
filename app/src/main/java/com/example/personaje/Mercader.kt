@@ -31,7 +31,6 @@ class Mercader : AppCompatActivity() {
         rest = findViewById(R.id.buttonRestar)
         var uds: TextView = findViewById(R.id.udsText)
         sum = findViewById(R.id.buttonSumar)
-        val arrayArc = arrayArticulos.joinToString("\n")
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")

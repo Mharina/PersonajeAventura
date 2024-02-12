@@ -105,7 +105,7 @@ class Enemigo : AppCompatActivity() {
                         }
                     }
                 } else {
-                        Toast.makeText(this, "Ya has activado la habilidad, no puedes volver ha hacerlo este turno", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Ya has activado la habilidad, no puedes volver ha hacerlo este turno", Toast.LENGTH_LONG).show()
                 }
             }
             val ataqueMonstruo = if (evasion >= 5) 0 else monstruo.getAtaque()
@@ -139,12 +139,13 @@ class Enemigo : AppCompatActivity() {
                 vidam.text = "Vida: $vidaMonstruo Nivel: ${monstruo.getNivel()}"
                 vidaPersonaje -= ataqueMonstruo
                 if (vidaPersonaje <= 0) {
+                    vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
                     texto1.text = "${pj.getNombre()} has muerto."
                     val intent = Intent(this@Enemigo, MainActivity::class.java)
                     startActivity(intent)
                     mp.stop()
                 }
-                vidapj.text = "Vida: ${vidaPersonaje} Nivel: ${pj?.getNivel()}"
+                vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
                 texto2.text = "${monstruo.getNombre()} ataca a ${pj.getNombre()}. Salud de ${pj.getNombre()}: $vidaPersonaje"
                 pj.calcularAtaque()
                 pj.calcularDefensa()
@@ -164,6 +165,38 @@ class Enemigo : AppCompatActivity() {
                 textPocion.visibility = View.VISIBLE
                 ira.visibility = View.VISIBLE
                 textIra.visibility = View.VISIBLE
+                pocion.setOnClickListener{
+                    if (textPocion.text.equals("0")){
+                        Toast.makeText(this, "No tienes pociones", Toast.LENGTH_LONG).show()
+                    }else{
+                        vidaPersonaje+=(pj.getSalud()*0.5).toInt()
+                    }
+                    vidaPersonaje -= ataqueMonstruo
+                    if (vidaPersonaje <= 0) {
+                        vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
+                        texto1.text = "${pj.getNombre()} has muerto."
+                        val intent = Intent(this@Enemigo, MainActivity::class.java)
+                        startActivity(intent)
+                        mp.stop()
+                    }
+                    vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
+                }
+                ira.setOnClickListener{
+                    if (textIra.text.equals("0")){
+                        Toast.makeText(this, "No tienes pociones", Toast.LENGTH_LONG).show()
+                    }else{
+                        pj.setAtaque(pj.getAtaque() + 80)
+                    }
+                    vidaPersonaje -= ataqueMonstruo
+                    if (vidaPersonaje <= 0) {
+                        vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
+                        texto1.text = "${pj.getNombre()} has muerto."
+                        val intent = Intent(this@Enemigo, MainActivity::class.java)
+                        startActivity(intent)
+                        mp.stop()
+                    }
+                    vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
+                }
             }
         }
     }
