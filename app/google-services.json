@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "296381383611",
+    "project_id": "personajeaventura",
+    "storage_bucket": "personajeaventura.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296381383611:android:6fe5fa9a04fd0189ddba9e",
+        "android_client_info": {
+          "package_name": "com.example.personaje"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkFsFJi4VV-KDHBMAuh5bgqH9h_YJOv2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Otros atributos del tema -->
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+        <item name="android:popupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="android:actionBarTheme">@style/PuntosBlancos</item>
+
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <!-- Atributos específicos del overlay -->
+        <item name="android:background">@color/negro_trans</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <!-- Personaliza el estilo del menú emergente aquí -->
+        <item name="android:background">@color/negro_trans</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="PuntosBlancos" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+</resources>

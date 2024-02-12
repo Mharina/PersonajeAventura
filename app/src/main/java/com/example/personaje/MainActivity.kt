@@ -1,7 +1,6 @@
 package com.example.personaje
 
 import android.content.Intent
-import android.graphics.Color
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,11 +33,13 @@ class MainActivity : AppCompatActivity() {
         val dbHelperA = DatabaseHelper (this)
         val dbHelperC = DatabaseHelper2 (this)
         val dbHelperM = DatabaseEnemigo (this)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         var mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
 
         dbHelperC.recreaTabla()
         dbHelperA.recreaTabla()
         dbHelperM.recreaTabla()
+        setSupportActionBar(toolbar)
 
         val opcionesRaza: Array<String> = resources.getStringArray(R.array.raza)
         val opcionesClase: Array<String> = resources.getStringArray(R.array.clase)
