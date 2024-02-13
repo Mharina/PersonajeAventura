@@ -8,12 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="347dp"
+        android:layout_height="239dp"
         android:scaleType="centerInside"
         android:src="@drawable/banner_witcher"
         app:layout_constraintBottom_toTopOf="@+id/correo"
@@ -24,86 +20,80 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/correo"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         android:ems="10"
-        android:hint="email"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColorHint="@color/piedra"
-        app:boxStrokeColor="@color/negro_trans"
-        app:hintTextColor="@color/negro_trans"
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/pass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="Autofill">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black" />
+            android:background="@color/negro_trans"
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:hint="contraseña"
+        android:hint="Contraseña"
         android:minHeight="48dp"
         android:textColorHint="@color/piedra"
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:boxStrokeColor="@color/negro_trans"
-        app:hintTextColor="@color/negro_trans"
+        app:layout_constraintTop_toBottomOf="@+id/correo"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/black"
+        app:passwordToggleTint="@color/white"
         tools:ignore="Autofill">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:inputType="textPassword"/>
+            android:background="@color/negro_trans"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/login"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:backgroundTint="@color/negro_trans"
-        android:text="Intgresar"
+        android:text="Ingresar"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/reg"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="96dp"
         android:layout_weight="1"
-        android:text="Registrarse"
         android:backgroundTint="@color/negro_trans"
+        android:text="Registrarse"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

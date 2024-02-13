@@ -4,6 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/paredbuena"
     tools:context=".Partida">
 
+    <Button
+        android:id="@+id/Empezar"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="222dp"
+        android:backgroundTint="@color/negro_trans"
+        android:text="Empezar"
+        app:layout_constraintBottom_toTopOf="@+id/Continuar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Continuar"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="222dp"
+        android:backgroundTint="@color/negro_trans"
+        android:text="Continuar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Empezar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="piedra">#E6E6E6</color>
     <color name="negro_trans">#80000000</color>
+    <color name="azul">#3F51B5</color>
 </resources>

@@ -45,6 +45,8 @@ class Login : AppCompatActivity() {
                     pass.editText?.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful){
                         Log.d(ContentValues.TAG, "Login de usuario")
+                        // Comprobar primero si ha jugado alguna vez mirando si tiene algun pj creado(uid)
+                        // Personaje creado Partida si no a MainActivity
                         val logueado = Intent (this, Partida::class.java)
                         logueado.putExtra("email",email.editText?.text?.toString())
                         startActivity(logueado)
