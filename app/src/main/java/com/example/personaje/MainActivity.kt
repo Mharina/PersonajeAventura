@@ -656,6 +656,12 @@ data class Personaje(
     fun setDefensa(defensa:Int){
         this.defensa=defensa
     }
+    fun setSalud(salud: Int){
+        this.salud=salud
+    }
+    fun setNivel(nivel: Int){
+        this.nivel=nivel
+    }
     fun subirNivel() {
         if (nivel < 10) { // Limitar el nivel a 10
             nivel++
