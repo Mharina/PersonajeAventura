@@ -58,6 +58,32 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
         }
         db.close()
     }
+    fun obtUdsArt(artId: Int): Int {
+        val db = this.readableDatabase
+        // Miramos si hay al menos una fila que tenga la id introducida (SELECT 1)
+        val validarID = db.rawQuery("SELECT 1 FROM $TABLA_OBJETOS WHERE $KEY_ID = ?", arrayOf(artId.toString()))
+        val idExiste = validarID.moveToFirst()
+        validarID.close()
+
+        var unidades = 0
+
+        if (idExiste) {
+            val selectQuery = "SELECT $COLUMN_UNIDADES FROM $TABLA_OBJETOS WHERE $KEY_ID = ?"
+            val cursor = db.rawQuery(selectQuery, arrayOf(artId.toString()))
+
+            if (cursor.moveToFirst()) {
+                val uds = cursor.getColumnIndex(COLUMN_UNIDADES)
+                // Por si las moscas comprobamos que el valor obtenido es =>0 para que no nos salte error
+                if (uds != -1) {
+                    unidades = cursor.getInt(uds)
+                }
+            }
+            cursor.close()
+        }
+
+        db.close()
+        return unidades
+    }
     @SuppressLint("Range")
     fun getArticulo(): ArrayList<Articulo> {
         val articulos = ArrayList<Articulo>()

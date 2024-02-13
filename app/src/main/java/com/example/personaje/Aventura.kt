@@ -40,7 +40,7 @@ class Aventura : AppCompatActivity() {
                     intent.putExtra("mochila", moch)
                     startActivity(intent)
                 }
-//                1 -> {
+//                0 -> {
 //                    var intent = Intent(this@Aventura, Mercader::class.java)
 //                    intent.putExtra("personaje", pj)
 //                    intent.putExtra("mochila", moch)

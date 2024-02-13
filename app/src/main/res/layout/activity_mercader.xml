@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/botones"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:orientation="horizontal">
 
@@ -51,7 +51,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
@@ -65,7 +65,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
@@ -118,6 +118,7 @@
                 android:visibility="gone"
                 tools:ignore="TextContrastCheck"
                 style="?android:attr/buttonBarButtonStyle" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -173,6 +174,19 @@
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/buy"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:backgroundTint="#80000000"
+            android:text="Comprar"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
 
     </LinearLayout>

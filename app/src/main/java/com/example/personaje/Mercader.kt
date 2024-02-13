@@ -8,11 +8,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import java.util.Random
 
 class Mercader : AppCompatActivity() {
     var unidades = 1
-    val unidadMaxima = 10
+    var unidadMaxima = 1
     val unidadMinima = 1
     private lateinit var rest: ImageButton
     private lateinit var sum: ImageButton
@@ -26,6 +27,7 @@ class Mercader : AppCompatActivity() {
         val venta: Button = findViewById(R.id.venta)
         val cancela: Button = findViewById(R.id.cancelar)
         val foto: ImageView = findViewById(R.id.imageView)
+        val buy : Button = findViewById(R.id.buy)
         val dbHelper2 = DatabaseHelper2(this)
         val arrayArticulos = dbHelper2.getArticulo()
         rest = findViewById(R.id.buttonRestar)
@@ -69,6 +71,7 @@ class Mercader : AppCompatActivity() {
                 rest.visibility = View.INVISIBLE
                 sum.visibility = View.INVISIBLE
                 uds.visibility = View.INVISIBLE
+                buy.visibility = View.INVISIBLE
             }
 
             compra.setOnClickListener {
@@ -84,12 +87,15 @@ class Mercader : AppCompatActivity() {
                     rest.visibility = View.INVISIBLE
                     sum.visibility = View.INVISIBLE
                     uds.visibility = View.INVISIBLE
+                    buy.visibility = View.INVISIBLE
                 }
                 actualizarBotones()
                 var ale = Random()
                 var num = ale.nextInt(10)
                 var imagen = arrayArticulos[num].getImg()
                 var ruta = resources.getIdentifier(imagen, "drawable", packageName)
+                unidadMaxima=dbHelper2.obtUdsArt(num)
+
                 foto.setImageResource(ruta)
                 arti.text = arrayArticulos[num].toString()
                 arti.visibility = View.VISIBLE
@@ -110,6 +116,14 @@ class Mercader : AppCompatActivity() {
                         uds.text = unidades.toString()
                         actualizarBotones()
                     }
+                }
+                buy.setOnClickListener {
+                    if ((arrayArticulos[num].getPeso())*unidades<= moch!!.getPesoMochila()){
+                        moch.addArticulo(arrayArticulos[num], 1)
+                    } else {
+                        Toast.makeText(this, "Peso excede del peso TOTAL\tTienes ${moch.getPesoMochila()} libre.", Toast.LENGTH_LONG).show()
+                    }
+                    dbHelper2.retirarArticulo(arrayArticulos[num],unidades)
                 }
             }
 
