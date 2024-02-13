@@ -62,6 +62,16 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <ProgressBar
+
+            android:id="@+id/progressBarLife"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#80000000"
+            android:max="100"
+            android:progress="100"
+            android:progressTint="#FF0000" />
+
         <TextView
             android:id="@+id/textView12"
             android:layout_width="match_parent"

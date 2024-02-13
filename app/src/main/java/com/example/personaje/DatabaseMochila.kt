@@ -44,10 +44,14 @@ class DatabaseMochila(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
         val db = this.readableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if (cursor.moveToFirst()) {
-            val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
-            val unidades = cursor.getString(cursor.getColumnIndex(COLUMN_UNIDADES))
-            pj.getMochila().addArticulo(Articulo(1,))
+            do {
+                val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
+                val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
+                val arti = FormarArticulo()
+                pj.getMochila().addArticulo(arti.fArti(nombre,unidades),unidades)
+            } while (cursor.moveToNext())
         }
+        cursor.close()
+        db.close()
     }
-
 }
