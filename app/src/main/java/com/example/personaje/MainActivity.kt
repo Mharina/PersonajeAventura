@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.speech.tts.TextToSpeech
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,9 +19,10 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var textToSpeech:TextToSpeech
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         val dbHelperMercader = DatabaseHelperMercader (this)
         val dbHelperM = DatabaseEnemigo (this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        var mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
+        val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
+        val nombre: EditText = findViewById(R.id.editTextText)
 
         dbHelperMercader.recreaTabla()
         dbHelperA.recreaTabla()
@@ -110,27 +113,45 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+        var pos=0
         mp.isLooping = true
+        mp.start()
         musica.setOnClickListener {
             if(mp.isPlaying){
-                mp.stop()
+                pos = mp.currentPosition
+                mp.pause()
+                mp.isLooping = false
                 musica.setImageResource(R.drawable.sin_sonido)
             }else{
                 musica.setImageResource(R.drawable.herramienta_de_audio_con_altavoz)
-                mp= MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
+                mp.seekTo(pos)
                 mp.start()
+                mp.isLooping = true
+            }
+        }
+
+        textToSpeech = TextToSpeech(this){status->
+            if (status ==TextToSpeech.SUCCESS){
+                val result = textToSpeech.setLanguage(Locale.getDefault())
+                if (result == TextToSpeech.LANG_MISSING_DATA||result == TextToSpeech.LANG_NOT_SUPPORTED){
+                    Toast.makeText(this,"lenguaje no soportado",Toast.LENGTH_LONG).show()
+                }
             }
         }
 
         val button: Button = findViewById(R.id.button)
 
         button.setOnClickListener {
-            val nombre: EditText = findViewById(R.id.editTextText)
             if (nombre.text.isBlank()) {
                 nombre.setError("El campo nombre es necesario")
             } else {
+                textToSpeech.speak(
+                    nombre.text.toString().trim(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    null
+                )
                 val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-
                 val personaje = Personaje(
                     nombre.text.toString(),
                     spinnerEstadoVital.selectedItem as String,

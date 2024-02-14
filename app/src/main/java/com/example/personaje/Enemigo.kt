@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -36,18 +37,25 @@ class Enemigo : AppCompatActivity() {
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
         val dbHelper3 = DatabaseEnemigo(this)
+        val dbPelea = DatabasePelea (this)
         val arrayMonstruo = dbHelper3.getMonstruo()
         var num = 0
-        var mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+        val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+        var pos=0
+
+        mp.isLooping = true
         mp.start()
         musica.setOnClickListener {
             if(mp.isPlaying){
-                mp.stop()
+                pos = mp.currentPosition
+                mp.pause()
+                mp.isLooping = false
                 musica.setImageResource(R.drawable.sin_sonido)
             }else{
                 musica.setImageResource(R.drawable.herramienta_de_audio_con_altavoz)
-                mp= MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+                mp.seekTo(pos)
                 mp.start()
+                mp.isLooping = true
             }
         }
         if ((pj!!.getNivel() + 2) <= 10) {
@@ -73,9 +81,12 @@ class Enemigo : AppCompatActivity() {
         actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
         actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
         huir.setOnClickListener {
-            var intent = Intent(this@Enemigo, Aventura::class.java)
+            val intent = Intent(this@Enemigo, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
+            if(mp.isPlaying){
+                mp.stop()
+            }
             startActivity(intent)
         }
         luchar.setOnClickListener {
@@ -146,7 +157,11 @@ class Enemigo : AppCompatActivity() {
                 if (vidaMonstruo <= 0) {
                     actualizarBarraDeVidaM(0,monstruo.getSalud())
                     pj.setExperiencia(expGanada)
+                    dbPelea.insertarPelea("",0,"ganado")
                     texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
+                    if(mp.isPlaying){
+                        mp.stop()
+                    }
                     val intent = Intent(this@Enemigo, MainActivity::class.java)
                     startActivity(intent)
                     mp.stop()
@@ -156,7 +171,11 @@ class Enemigo : AppCompatActivity() {
                 vidaPersonaje -= ataqueMonstruo
                 if (vidaPersonaje <= 0) {
                     actualizarBarraDeVidaP(0,pj.getSalud())
+                    dbPelea.insertarPelea("",0,"perdido")
                     texto1.text = "${pj.getNombre()} has muerto."
+                    if(mp.isPlaying){
+                        mp.stop()
+                    }
                     val intent = Intent(this@Enemigo, MainActivity::class.java)
                     startActivity(intent)
                     mp.stop()
@@ -190,7 +209,11 @@ class Enemigo : AppCompatActivity() {
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
+                        dbPelea.insertarPelea("",0,"perdido")
                         texto1.text = "${pj.getNombre()} has muerto."
+                        if(mp.isPlaying){
+                            mp.stop()
+                        }
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
                         startActivity(intent)
                         mp.stop()
@@ -206,7 +229,11 @@ class Enemigo : AppCompatActivity() {
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
+                        dbPelea.insertarPelea("",0,"perdido")
                         texto1.text = "${pj.getNombre()} has muerto."
+                        if(mp.isPlaying){
+                            mp.stop()
+                        }
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
                         startActivity(intent)
                         mp.stop()
