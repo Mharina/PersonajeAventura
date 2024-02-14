@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        mp.start()
+        mp.isLooping = true
         musica.setOnClickListener {
             if(mp.isPlaying){
                 mp.stop()

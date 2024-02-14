@@ -15,13 +15,14 @@ import android.widget.Toast
 import java.util.Random
 
 class Enemigo : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enemigo)
         val huir: Button = findViewById(R.id.button2)
         val luchar: Button = findViewById(R.id.button)
-        val vidapj: TextView = findViewById(R.id.textView12)
-        val vidam: TextView = findViewById(R.id.textView13)
+        val vidam: TextView = findViewById(R.id.textView17)
+        val vidapj: TextView = findViewById(R.id.textView13)
         val habilidad: Button = findViewById(R.id.button5)
         val atacar: Button = findViewById(R.id.button3)
         val inventario: Button = findViewById(R.id.button4)
@@ -54,16 +55,23 @@ class Enemigo : AppCompatActivity() {
         } else {
             num = (1..10).random()
         }
-        val progressBarLife = findViewById<ProgressBar>(R.id.progressBarLife)
-        fun actualizarBarraDeVida(vidaActual: Int, vidaTotal: Int) {
-            progressBarLife.max = vidaTotal
-            progressBarLife.progress = vidaActual
-        }
         val monstruo = arrayMonstruo[num]
         var vidaPersonaje = pj!!.getSalud()
         var vidaMonstruo = monstruo.getSalud()
-        //vidapj.text = "Vida: ${vidaPersonaje} Nivel: ${pj?.getNivel()}"
-        vidam.text = "Vida: ${vidaMonstruo} Nivel: ${monstruo.getNivel()}"
+        val progressBarLifeM = findViewById<ProgressBar>(R.id.progressBarLifeM)
+        fun actualizarBarraDeVidaM(vidaActual: Int, vidaTotal: Int) {
+            progressBarLifeM.max = vidaTotal
+            progressBarLifeM.progress = vidaActual
+            vidam.text= "$vidaActual/$vidaTotal lvl:${monstruo.getNivel()}"
+        }
+        val progressBarLifeP = findViewById<ProgressBar>(R.id.progressBarLife)
+        fun actualizarBarraDeVidaP(vidaActual: Int, vidaTotal: Int) {
+            progressBarLifeP.max = vidaTotal
+            progressBarLifeP.progress = vidaActual
+            vidapj.text= "$vidaActual/$vidaTotal lvl:${pj.getNivel()}"
+        }
+        actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
+        actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
         huir.setOnClickListener {
             var intent = Intent(this@Enemigo, Aventura::class.java)
             intent.putExtra("personaje", pj)
@@ -136,25 +144,24 @@ class Enemigo : AppCompatActivity() {
                 vidaMonstruo -= pj.getAtaque()
                 texto1.text = "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: $vidaMonstruo"
                 if (vidaMonstruo <= 0) {
+                    actualizarBarraDeVidaM(0,monstruo.getSalud())
                     pj.setExperiencia(expGanada)
                     texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
                     val intent = Intent(this@Enemigo, MainActivity::class.java)
                     startActivity(intent)
                     mp.stop()
                 }
-                actualizarBarraDeVida(vidaPersonaje,pj.getSalud())
-                vidam.text = "Vida: $vidaMonstruo Nivel: ${monstruo.getNivel()}"
+                actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
+                actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
                 vidaPersonaje -= ataqueMonstruo
                 if (vidaPersonaje <= 0) {
-                    //vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
-                    actualizarBarraDeVida(0,pj.getSalud())
+                    actualizarBarraDeVidaP(0,pj.getSalud())
                     texto1.text = "${pj.getNombre()} has muerto."
                     val intent = Intent(this@Enemigo, MainActivity::class.java)
                     startActivity(intent)
                     mp.stop()
                 }
-                //vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
-                actualizarBarraDeVida(vidaPersonaje,pj.getSalud())
+                actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
                 texto2.text = "${monstruo.getNombre()} ataca a ${pj.getNombre()}. Salud de ${pj.getNombre()}: $vidaPersonaje"
                 pj.calcularAtaque()
                 pj.calcularDefensa()
@@ -182,15 +189,13 @@ class Enemigo : AppCompatActivity() {
                     }
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
-                        //vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
-                        actualizarBarraDeVida(0,pj.getSalud())
+                        actualizarBarraDeVidaP(0,pj.getSalud())
                         texto1.text = "${pj.getNombre()} has muerto."
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
                         startActivity(intent)
                         mp.stop()
                     }
-                    actualizarBarraDeVida(vidaPersonaje,pj.getSalud())
-                    //vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
+                    actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
                 }
                 ira.setOnClickListener{
                     if (textIra.text.equals("0")){
@@ -200,15 +205,13 @@ class Enemigo : AppCompatActivity() {
                     }
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
-                        actualizarBarraDeVida(0,pj.getSalud())
-                        //vidapj.text = "Vida: 0 Nivel: ${pj?.getNivel()}"
+                        actualizarBarraDeVidaP(0,pj.getSalud())
                         texto1.text = "${pj.getNombre()} has muerto."
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
                         startActivity(intent)
                         mp.stop()
                     }
-                    actualizarBarraDeVida(vidaPersonaje,pj.getSalud())
-                    //vidapj.text = "Vida: $vidaPersonaje Nivel: ${pj?.getNivel()}"
+                    actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
                 }
             }
         }

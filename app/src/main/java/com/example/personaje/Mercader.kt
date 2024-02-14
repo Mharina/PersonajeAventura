@@ -46,7 +46,7 @@ class Mercader : AppCompatActivity() {
         }
 
         continuar.setOnClickListener {
-            var intent = Intent(this@Mercader, Aventura::class.java)
+            val intent = Intent(this@Mercader, Aventura::class.java)
             intent.putParcelableArrayListExtra("contenido", moch?.getContenido())
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
@@ -119,7 +119,7 @@ class Mercader : AppCompatActivity() {
                 }
                 buy.setOnClickListener {
                     if ((arrayArticulos[num].getPeso())*unidades<= moch!!.getPesoMochila()){
-                        moch.addArticulo(arrayArticulos[num], 1)
+                        moch.addArticulo(arrayArticulos[num], unidades)
                     } else {
                         Toast.makeText(this, "Peso excede del peso TOTAL\tTienes ${moch.getPesoMochila()} libre.", Toast.LENGTH_LONG).show()
                     }

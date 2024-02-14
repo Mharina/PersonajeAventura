@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/paredbuena"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:textAlignment="center"
     tools:context=".Enemigo">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,16 +20,30 @@
         app:title="Enemigo"
         app:titleTextColor="@color/white" />
 
-    <TextView
-        android:id="@+id/textView13"
+    <ProgressBar
+
+        android:id="@+id/progressBarLifeM"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
+        android:indeterminateTint="@color/azul"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/custom_progress_bar" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="30dp"
         android:background="#80000000"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textAlignment="center"
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,28 +74,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:textAlignment="center"
         android:visibility="visible">
 
         <ProgressBar
-
             android:id="@+id/progressBarLife"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#80000000"
             android:max="100"
             android:progress="100"
-            android:progressTint="#FF0000" />
+            android:progressDrawable="@drawable/custom_progress_bar" />
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
             android:background="#80000000"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textView14"
@@ -124,7 +139,7 @@
                 android:background="#00FFFFFF"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pocion"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textView"
@@ -132,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -150,7 +165,7 @@
                 android:background="#00FFFFFF"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ira"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -158,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

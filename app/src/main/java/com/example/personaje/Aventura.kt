@@ -34,14 +34,8 @@ class Aventura : AppCompatActivity() {
 //                    intent.putExtra("mochila", moch)
 //                    startActivity(intent)
 //                }
-                0 -> {
-                    var intent = Intent(this@Aventura, Enemigo::class.java)
-                    intent.putExtra("personaje", pj)
-                    intent.putExtra("mochila", moch)
-                    startActivity(intent)
-                }
 //                0 -> {
-//                    var intent = Intent(this@Aventura, Mercader::class.java)
+//                    var intent = Intent(this@Aventura, Enemigo::class.java)
 //                    intent.putExtra("personaje", pj)
 //                    intent.putExtra("mochila", moch)
 //                    if (moch != null) {
@@ -49,6 +43,15 @@ class Aventura : AppCompatActivity() {
 //                    }
 //                    startActivity(intent)
 //                }
+                0 -> {
+                    var intent = Intent(this@Aventura, Mercader::class.java)
+                    intent.putExtra("personaje", pj)
+                    intent.putExtra("mochila", moch)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
+                    startActivity(intent)
+                }
 //                0 -> {
 //                    var intent = Intent(this@Aventura, Objeto::class.java)
 //                    intent.putExtra("personaje", pj)
