@@ -6,11 +6,11 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
+class DatabaseHelperMercader (context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE = "OBJETOS_MERCADER.db"
-        private const val TABLA_OBJETOSM = "objetos"
+        private const val TABLA_OBJETOS = "Objetos_Mercader"
         private const val KEY_ID = "_id"
         private const val COLUMN_NOMBRE = "nombre"
         private const val COLUMN_PESO = "peso"
@@ -20,13 +20,13 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
         private const val COLUMN_VALOR = "valor"
     }
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = "CREATE TABLE $TABLA_OBJETOSM ($KEY_ID INTEGER PRIMARY KEY, $COLUMN_NOMBRE TEXT, $COLUMN_PESO INTEGER, " +
+        val createTable = "CREATE TABLE $TABLA_OBJETOS ($KEY_ID INTEGER PRIMARY KEY, $COLUMN_NOMBRE TEXT, $COLUMN_PESO INTEGER, " +
                 "$COLUMN_TIPO TEXT, $COLUMN_IMG TEXT, $COLUMN_UNIDADES TEXT, $COLUMN_VALOR INTEGER)"
         db.execSQL(createTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLA_OBJETOSM")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_OBJETOS")
         onCreate(db)
     }
     fun insertarArticulo(articulo: Articulo):Long {
@@ -39,58 +39,55 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
             put(COLUMN_UNIDADES, articulo.getUnidades())
             put(COLUMN_VALOR, articulo.getValor())
         }
-        val id= db.insert(TABLA_OBJETOSM, null, values)
+        val id= db.insert(TABLA_OBJETOS, null, values)
         db.close()
         return id
     }
     @SuppressLint("Range")
     fun retirarArticulo(articulo: Articulo, unidad: Int){
         val idD= articulo.getId()
-        val selectQuery = "SELECT * FROM $TABLA_OBJETOSM WHERE $KEY_ID=$idD"
+        val selectQuery = "SELECT * FROM $TABLA_OBJETOS WHERE $KEY_ID=$idD"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
         if(unidades==unidad){
-            db.execSQL("DELETE FROM $TABLA_OBJETOSM WHERE $KEY_ID=$idD");
+            db.execSQL("DELETE FROM $TABLA_OBJETOS WHERE $KEY_ID=$idD");
         }else{
             val cont=articulo.getUnidades()-unidad
-            db.execSQL("UPDATE $TABLA_OBJETOSM SET $COLUMN_UNIDADES=$cont WHERE $KEY_ID=$idD")
+            db.execSQL("UPDATE $TABLA_OBJETOS SET $COLUMN_UNIDADES=$cont WHERE $KEY_ID=$idD")
         }
         db.close()
     }
     fun obtUdsArt(artId: Int): Int {
         val db = this.readableDatabase
         // Miramos si hay al menos una fila que tenga la id introducida (SELECT 1)
-        val validarID = db.rawQuery("SELECT 1 FROM $TABLA_OBJETOSM WHERE $KEY_ID = ?", arrayOf(artId.toString()))
+        val validarID = db.rawQuery("SELECT 1 FROM $TABLA_OBJETOS WHERE $KEY_ID = ?", arrayOf(artId.toString()))
         val idExiste = validarID.moveToFirst()
         validarID.close()
-
         var unidades = 0
-
         if (idExiste) {
-            val selectQuery = "SELECT $COLUMN_UNIDADES FROM $TABLA_OBJETOSM WHERE $KEY_ID = ?"
+            val selectQuery = "SELECT $COLUMN_UNIDADES FROM $TABLA_OBJETOS WHERE $KEY_ID = ?"
             val cursor = db.rawQuery(selectQuery, arrayOf(artId.toString()))
-
             if (cursor.moveToFirst()) {
                 val uds = cursor.getColumnIndex(COLUMN_UNIDADES)
-                // Por si las moscas comprobamos que el valor obtenido es =>0 para que no nos salte error
+            // Por si las moscas comprobamos que el valor obtenido es =>0 para que no nos salte error
                 if (uds != -1) {
                     unidades = cursor.getInt(uds)
                 }
             }
             cursor.close()
         }
-
         db.close()
         return unidades
     }
+
     @SuppressLint("Range")
     fun getArticulo(): ArrayList<Articulo> {
         val articulos = ArrayList<Articulo>()
-        val selectQuery = "SELECT * FROM $TABLA_OBJETOSM"
+        val selectQuery = "SELECT * FROM $TABLA_OBJETOS"
         val db = this.readableDatabase
         val cursor = db.rawQuery(selectQuery, null)
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
@@ -110,7 +107,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE, nu
 
     fun recreaTabla(){
         val db = this.writableDatabase
-        db.execSQL("DROP TABLE IF EXISTS ${DatabaseHelper2.TABLA_OBJETOSM}")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_OBJETOS")
         onCreate(db)
 
         val arrayArticulosC = ArrayList<Articulo>()

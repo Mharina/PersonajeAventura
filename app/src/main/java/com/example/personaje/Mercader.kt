@@ -13,7 +13,6 @@ import java.util.Random
 
 class Mercader : AppCompatActivity() {
     var unidades = 1
-    var unidadMaxima = 1
     val unidadMinima = 1
     private lateinit var rest: ImageButton
     private lateinit var sum: ImageButton
@@ -28,8 +27,8 @@ class Mercader : AppCompatActivity() {
         val cancela: Button = findViewById(R.id.cancelar)
         val foto: ImageView = findViewById(R.id.imageView)
         val buy : Button = findViewById(R.id.buy)
-        val dbHelper2 = DatabaseHelper2(this)
-        val arrayArticulos = dbHelper2.getArticulo()
+        val dbHelperMercader = DatabaseHelperMercader(this)
+        val arrayArticulos = dbHelperMercader.getArticulo()
         rest = findViewById(R.id.buttonRestar)
         var uds: TextView = findViewById(R.id.udsText)
         sum = findViewById(R.id.buttonSumar)
@@ -89,12 +88,12 @@ class Mercader : AppCompatActivity() {
                     uds.visibility = View.INVISIBLE
                     buy.visibility = View.INVISIBLE
                 }
-                actualizarBotones()
+
                 var ale = Random()
                 var num = ale.nextInt(10)
                 var imagen = arrayArticulos[num].getImg()
                 var ruta = resources.getIdentifier(imagen, "drawable", packageName)
-                unidadMaxima=dbHelper2.obtUdsArt(num)
+                actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
 
                 foto.setImageResource(ruta)
                 arti.text = arrayArticulos[num].toString()
@@ -103,18 +102,19 @@ class Mercader : AppCompatActivity() {
                 rest.visibility = View.VISIBLE
                 sum.visibility = View.VISIBLE
                 uds.visibility = View.VISIBLE
+                buy.visibility = View.VISIBLE
                 sum.setOnClickListener {
-                    if (unidades < unidadMaxima) {
+                    if (unidades < dbHelperMercader.obtUdsArt(num+1)) {
                         unidades++
                         uds.text = unidades.toString()
-                        actualizarBotones()
+                        actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
                     }
                 }
                 rest.setOnClickListener {
                     if (unidades > unidadMinima) {
                         unidades--
                         uds.text = unidades.toString()
-                        actualizarBotones()
+                        actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
                     }
                 }
                 buy.setOnClickListener {
@@ -123,7 +123,7 @@ class Mercader : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "Peso excede del peso TOTAL\tTienes ${moch.getPesoMochila()} libre.", Toast.LENGTH_LONG).show()
                     }
-                    dbHelper2.retirarArticulo(arrayArticulos[num],unidades)
+                    dbHelperMercader.retirarArticulo(arrayArticulos[num],unidades)
                 }
             }
 
@@ -140,7 +140,7 @@ class Mercader : AppCompatActivity() {
                     sum.visibility = View.INVISIBLE
                     uds.visibility = View.INVISIBLE
                 }
-                actualizarBotones()
+                actualizarBotones(5)
                 arti.visibility = View.VISIBLE
                 foto.setImageResource(R.drawable.mochila)
                 foto.visibility = View.VISIBLE
@@ -149,17 +149,17 @@ class Mercader : AppCompatActivity() {
                 uds.visibility = View.VISIBLE
                 arti.text = moch.toString()
                 sum.setOnClickListener {
-                    if (unidades < unidadMaxima) {
+                    if (unidades < 5) {
                         unidades++
                         uds.text = unidades.toString()
-                        actualizarBotones()
+                        actualizarBotones(5)
                     }
                 }
                 rest.setOnClickListener {
                     if (unidades > unidadMinima) {
                     unidades--
                     uds.text = unidades.toString()
-                    actualizarBotones()
+                    actualizarBotones(5)
                 }
                 }
             }
@@ -167,8 +167,8 @@ class Mercader : AppCompatActivity() {
         }
     }
 
-    private fun actualizarBotones() {
-        sum.visibility = if (unidades >= unidadMaxima) View.INVISIBLE else View.VISIBLE
+    private fun actualizarBotones(unidadMax : Int) {
+        sum.visibility = if (unidades >= unidadMax) View.INVISIBLE else View.VISIBLE
         rest.visibility = if (unidades <= unidadMinima) View.INVISIBLE else View.VISIBLE
     }
 }

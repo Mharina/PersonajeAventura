@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/paredbuena"
         android:orientation="vertical"
         tools:context=".Mercader">
@@ -26,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/mercader"
-            android:contentDescription="@string/todos" />
+            android:contentDescription="@string/todos"
+            android:src="@drawable/mercader" />
 
         <TextView
             android:id="@+id/art"
@@ -35,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="#CC000000"
+            android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:visibility="gone"
-            android:gravity="center_horizontal"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/botones"
@@ -76,6 +78,7 @@
 
             <Button
                 android:id="@+id/compra"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -86,26 +89,26 @@
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:visibility="gone"
-                tools:ignore="TextContrastCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/venta"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="5dp"
-                android:text="@string/venta"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:backgroundTint="#80000000"
+                android:text="@string/venta"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:visibility="gone"
-                tools:ignore="TextContrastCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/cancelar"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -116,15 +119,14 @@
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:visibility="gone"
-                tools:ignore="TextContrastCheck"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/Uds"
             android:layout_width="176dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
 
@@ -140,7 +142,7 @@
                 android:src="@drawable/restar"
                 android:text="@string/sumar"
                 android:textColor="#FFFFFF"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -156,7 +158,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="RtlSymmetry,TextContrastCheck" />
 
             <ImageButton
@@ -170,7 +172,7 @@
                 android:src="@drawable/sumar"
                 android:text="@string/resta"
                 android:textColor="#FFFFFF"
-                android:visibility="visible"
+                android:visibility="invisible"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
