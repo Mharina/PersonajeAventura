@@ -2,37 +2,37 @@ package com.example.personaje
 
 class TiposMonstruos {
     fun infoMonstruo(
-        id:Int
+        nom:String
     ):Monstruo{
-        when(id){
-            1->{
+        when(nom){
+            "Estrige"->{
                 return Monstruo("Estrige",1)
             }
-            2->{
+            "Lamia"->{
                 return Monstruo("Lamia",2)
             }
-            3->{
+            "Kikimora"->{
                 return Monstruo("Kikimora",3)
             }
-            4->{
+            "Sirena"->{
                 return Monstruo("Sirena",4)
             }
-            5->{
+            "Ghuls"->{
                 return Monstruo("Ghuls",5)
             }
-            6->{
+            "Grifo"->{
                 return Monstruo("Grifo",6)
             }
-            7->{
+            "Djin"->{
                 return Monstruo("Djin",7)
             }
-            8->{
+            "Basilisco"->{
                 return Monstruo("Basilisco",8)
             }
-            9->{
+            "Miriápodo"->{
                 return Monstruo("Miriápodo",9)
             }
-            10->{
+            "Dragón"->{
                 return Monstruo("Dragón",10)
             }else -> return Monstruo("Estrige",1)
         }

@@ -9,6 +9,7 @@ import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -42,6 +43,9 @@ class Enemigo : AppCompatActivity() {
         var num = 0
         val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
         var pos=0
+        val cImg = obtImg()
+        val imgP: ImageView = findViewById(R.id.imageView3)
+        cImg.obtenerImagen3(imgP,pj!!.getRaza(),pj!!.getClase(),pj!!.getEstadoVital())
 
         mp.isLooping = true
         mp.start()
@@ -58,12 +62,12 @@ class Enemigo : AppCompatActivity() {
                 mp.isLooping = true
             }
         }
-        if ((pj!!.getNivel() + 2) <= 10) {
-            num = (1..(pj!!.getNivel() + 2)).random()
+        if ((pj!!.getNivel() + 1) <= 10) {
+            num = (pj.getNivel()..(pj!!.getNivel() + 1)).random()
         } else {
-            num = (1..10).random()
+            num = (pj.getNivel()-2..10).random()
         }
-        val monstruo = arrayMonstruo[num]
+        val monstruo = arrayMonstruo[num-1]
         var vidaPersonaje = pj!!.getSalud()
         var vidaMonstruo = monstruo.getSalud()
         val progressBarLifeM = findViewById<ProgressBar>(R.id.progressBarLifeM)
@@ -143,7 +147,7 @@ class Enemigo : AppCompatActivity() {
                 vidaPersonaje -= danoMonstruo
             }
             texto1.visibility = View.VISIBLE
-            texto1.visibility = View.VISIBLE
+            texto2.visibility = View.VISIBLE
             texto1.text = "${pj.getNombre()} tiene una suerte de $evasion y una defensa de ${defensaPersonaje}."
             texto2.text = "${pj.getNombre()} ha recibido $danoMonstruo de daño. Salud de ${pj.getNombre()}: $vidaPersonaje"
 
@@ -153,25 +157,27 @@ class Enemigo : AppCompatActivity() {
                 ira.visibility = View.GONE
                 textIra.visibility = View.GONE
                 vidaMonstruo -= pj.getAtaque()
+                Thread.sleep(1000)
                 texto1.text = "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: $vidaMonstruo"
                 if (vidaMonstruo <= 0) {
                     actualizarBarraDeVidaM(0,monstruo.getSalud())
                     pj.setExperiencia(expGanada)
-                    dbPelea.insertarPelea("",0,"ganado")
+                    dbPelea.insertarPelea("",monstruo.getNombre(),"ganado")
                     texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
                     if(mp.isPlaying){
                         mp.stop()
                     }
-                    val intent = Intent(this@Enemigo, MainActivity::class.java)
+                    val intent = Intent(this@Enemigo, Aventura::class.java)
                     startActivity(intent)
                     mp.stop()
                 }
                 actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
                 actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
                 vidaPersonaje -= ataqueMonstruo
+                Thread.sleep(1000)
                 if (vidaPersonaje <= 0) {
                     actualizarBarraDeVidaP(0,pj.getSalud())
-                    dbPelea.insertarPelea("",0,"perdido")
+                    dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
                     texto1.text = "${pj.getNombre()} has muerto."
                     if(mp.isPlaying){
                         mp.stop()
@@ -209,7 +215,7 @@ class Enemigo : AppCompatActivity() {
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
-                        dbPelea.insertarPelea("",0,"perdido")
+                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
@@ -229,7 +235,7 @@ class Enemigo : AppCompatActivity() {
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
-                        dbPelea.insertarPelea("",0,"perdido")
+                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
