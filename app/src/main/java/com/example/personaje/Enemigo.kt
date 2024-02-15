@@ -37,6 +37,7 @@ class Enemigo : AppCompatActivity() {
         val textIra: TextView = findViewById(R.id.textView16)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch = intent.getParcelableExtra<Mochila>("mochila")
+        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
         val dbHelper3 = DatabaseEnemigo(this)
         val dbPelea = DatabasePelea (this)
         val arrayMonstruo = dbHelper3.getMonstruo()
@@ -46,6 +47,14 @@ class Enemigo : AppCompatActivity() {
         val cImg = obtImg()
         val imgP: ImageView = findViewById(R.id.imageView3)
         cImg.obtenerImagen3(imgP,pj!!.getRaza(),pj!!.getClase(),pj!!.getEstadoVital())
+
+        if (contenidoMoch != null) {
+            contenidoMoch.forEach {
+                if (moch != null) {
+                    moch.actualizarMochila(it)
+                }
+            }
+        }
 
         mp.isLooping = true
         mp.start()
@@ -62,7 +71,7 @@ class Enemigo : AppCompatActivity() {
                 mp.isLooping = true
             }
         }
-        if ((pj!!.getNivel() + 1) <= 10) {
+        if ((pj!!.getNivel()) <= 10) {
             num = (pj.getNivel()..(pj!!.getNivel() + 1)).random()
         } else {
             num = (pj.getNivel()-2..10).random()
@@ -241,6 +250,11 @@ class Enemigo : AppCompatActivity() {
                             mp.stop()
                         }
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
+                        intent.putExtra("personaje", pj)
+                        intent.putExtra("mochila", moch)
+                        if (moch != null) {
+                            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                        }
                         startActivity(intent)
                         mp.stop()
                     }

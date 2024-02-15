@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarEjemplo"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#CC000000"
@@ -29,7 +29,7 @@
             android:id="@+id/imageButton2"
             android:layout_width="48dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="160dp"
+            android:layout_gravity="end|center_vertical"
             android:background="#00FFFFFF"
             android:contentDescription="Música"
             android:padding="8dp"

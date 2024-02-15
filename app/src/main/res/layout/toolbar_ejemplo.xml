@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbarEjemplo"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="#CC000000"
+    android:theme="@style/PuntosBlancos"
+    app:popupTheme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|center_vertical"
+        android:background="#00FFFFFF"
+        android:contentDescription="Música"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/herramienta_de_audio_con_altavoz"
+        tools:ignore="TouchTargetSizeCheck"
+        app:tint="@color/white" />
+
+</androidx.appcompat.widget.Toolbar>

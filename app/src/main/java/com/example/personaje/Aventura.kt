@@ -26,16 +26,10 @@ class Aventura : AppCompatActivity() {
 
         dado.setOnClickListener{
             var ale = Random()
-            var num = ale.nextInt(4)
+            var num = ale.nextInt(3)
             when(num){
-                0 -> {
+                3 -> {
                     var intent = Intent(this@Aventura, Ciudad::class.java)
-                    intent.putExtra("personaje", pj)
-                    intent.putExtra("mochila", moch)
-                    startActivity(intent)
-                }
-                1 -> {
-                    var intent = Intent(this@Aventura, Enemigo::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
                     if (moch != null) {
@@ -44,6 +38,15 @@ class Aventura : AppCompatActivity() {
                     startActivity(intent)
                 }
                 2 -> {
+                    var intent = Intent(this@Aventura, Enemigo::class.java)
+                    intent.putExtra("personaje", pj)
+                    intent.putExtra("mochila", moch)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
+                    startActivity(intent)
+                }
+                1 -> {
                     var intent = Intent(this@Aventura, Mercader::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
@@ -52,7 +55,7 @@ class Aventura : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
-                3 -> {
+                0 -> {
                     var intent = Intent(this@Aventura, Objeto::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)

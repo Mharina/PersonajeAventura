@@ -14,7 +14,7 @@
         tools:context=".Mercader">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarEjemplo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#CC000000"
@@ -184,7 +184,7 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:backgroundTint="#80000000"
-            android:text="Comprar"
+            android:text="Aceptar y  Comprar"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:visibility="invisible"

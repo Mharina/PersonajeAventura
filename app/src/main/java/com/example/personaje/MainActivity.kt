@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val dbHelperA = DatabaseHelper (this)
         val dbHelperMercader = DatabaseHelperMercader (this)
         val dbHelperM = DatabaseEnemigo (this)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
         val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
         val nombre: EditText = findViewById(R.id.editTextText)
 

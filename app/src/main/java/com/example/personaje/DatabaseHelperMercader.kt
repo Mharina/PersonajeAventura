@@ -44,19 +44,26 @@ class DatabaseHelperMercader (context: Context) : SQLiteOpenHelper(context, DATA
         return id
     }
     @SuppressLint("Range")
-    fun retirarArticulo(articulo: Articulo, unidad: Int){
-        val idD= articulo.getId()
-        val selectQuery = "SELECT * FROM $TABLA_OBJETOS WHERE $KEY_ID=$idD"
+    fun retirarArticulo(articulo: Articulo, unidad: Int) {
+        val idD = articulo.getId().toString()
+        val selectQuery = "SELECT * FROM $TABLA_OBJETOS WHERE $KEY_ID=?"
         val db = this.writableDatabase
-        val cursor = db.rawQuery(selectQuery, null)
-        val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
-        if(unidades==unidad){
-            db.execSQL("DELETE FROM $TABLA_OBJETOS WHERE $KEY_ID=$idD");
-        }else{
-            val cont=articulo.getUnidades()-unidad
-            db.execSQL("UPDATE $TABLA_OBJETOS SET $COLUMN_UNIDADES=$cont WHERE $KEY_ID=$idD")
+        val cursor = db.rawQuery(selectQuery, arrayOf(idD))
+
+        try {
+            if (cursor.moveToFirst()) {
+                val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
+                if (unidades == unidad) {
+                    db.execSQL("DELETE FROM $TABLA_OBJETOS WHERE $KEY_ID=?", arrayOf(idD))
+                } else {
+                    val cont = articulo.getUnidades() - unidad
+                    db.execSQL("UPDATE $TABLA_OBJETOS SET $COLUMN_UNIDADES=? WHERE $KEY_ID=?", arrayOf(cont.toString(), idD))
+                }
+            }
+        } finally {
+            cursor.close()
+            db.close()
         }
-        db.close()
     }
     fun obtUdsArt(artId: Int): Int {
         val db = this.readableDatabase

@@ -9,7 +9,7 @@
     tools:context=".Objeto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarEjemplo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CC000000"

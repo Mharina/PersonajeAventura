@@ -26,7 +26,7 @@ class Mercader : AppCompatActivity() {
         val venta: Button = findViewById(R.id.venta)
         val cancela: Button = findViewById(R.id.cancelar)
         val foto: ImageView = findViewById(R.id.imageView)
-        val buy : Button = findViewById(R.id.buy)
+        val buy: Button = findViewById(R.id.buy)
         val dbHelperMercader = DatabaseHelperMercader(this)
         val arrayArticulos = dbHelperMercader.getArticulo()
         rest = findViewById(R.id.buttonRestar)
@@ -93,7 +93,7 @@ class Mercader : AppCompatActivity() {
                 var num = ale.nextInt(10)
                 var imagen = arrayArticulos[num].getImg()
                 var ruta = resources.getIdentifier(imagen, "drawable", packageName)
-                actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
+                actualizarBotones(dbHelperMercader.obtUdsArt(num + 1))
 
                 foto.setImageResource(ruta)
                 arti.text = arrayArticulos[num].toString()
@@ -104,26 +104,35 @@ class Mercader : AppCompatActivity() {
                 uds.visibility = View.VISIBLE
                 buy.visibility = View.VISIBLE
                 sum.setOnClickListener {
-                    if (unidades < dbHelperMercader.obtUdsArt(num+1)) {
+                    if (unidades < dbHelperMercader.obtUdsArt(num + 1)) {
                         unidades++
                         uds.text = unidades.toString()
-                        actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
+                        actualizarBotones(dbHelperMercader.obtUdsArt(num + 1))
                     }
                 }
                 rest.setOnClickListener {
                     if (unidades > unidadMinima) {
                         unidades--
                         uds.text = unidades.toString()
-                        actualizarBotones(dbHelperMercader.obtUdsArt(num+1))
+                        actualizarBotones(dbHelperMercader.obtUdsArt(num + 1))
                     }
                 }
                 buy.setOnClickListener {
-                    if ((arrayArticulos[num].getPeso())*unidades<= moch!!.getPesoMochila()){
-                        moch.addArticulo(arrayArticulos[num], unidades)
+                    if ((arrayArticulos[num].getPeso()) * unidades <= moch!!.getPesoMochila()!!) {
+                        moch!!.addArticulo(arrayArticulos[num], unidades)
                     } else {
-                        Toast.makeText(this, "Peso excede del peso TOTAL\tTienes ${moch.getPesoMochila()} libre.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this,
+                            "Peso excede del peso TOTAL.\tTienes ${moch.getPesoMochila()} libre.",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                    dbHelperMercader.retirarArticulo(arrayArticulos[num],unidades)
+                    dbHelperMercader.retirarArticulo(arrayArticulos[num], unidades)
+                    Toast.makeText(
+                        this,
+                        "Comprado ${unidades} ${arrayArticulos[num].getNombre()}.\tTienes ${moch.getPesoMochila()} libre.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
@@ -157,17 +166,17 @@ class Mercader : AppCompatActivity() {
                 }
                 rest.setOnClickListener {
                     if (unidades > unidadMinima) {
-                    unidades--
-                    uds.text = unidades.toString()
-                    actualizarBotones(5)
-                }
+                        unidades--
+                        uds.text = unidades.toString()
+                        actualizarBotones(5)
+                    }
                 }
             }
 
         }
     }
 
-    private fun actualizarBotones(unidadMax : Int) {
+    private fun actualizarBotones(unidadMax: Int) {
         sum.visibility = if (unidades >= unidadMax) View.INVISIBLE else View.VISIBLE
         rest.visibility = if (unidades <= unidadMinima) View.INVISIBLE else View.VISIBLE
     }
