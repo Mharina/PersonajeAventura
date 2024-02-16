@@ -146,13 +146,14 @@ class Enemigo : AppCompatActivity() {
                     Toast.makeText(this, "Ya has activado la habilidad, no puedes volver ha hacerlo este turno", Toast.LENGTH_LONG).show()
                 }
             }
-            val ataqueMonstruo = if (evasion >= 5) 0 else monstruo.getAtaque()
+            val ataqueMonstruo = if (evasion >= 8) 0 else monstruo.getAtaque()
 
             // Aplicar la defensa del personaje
             val defensaPersonaje = pj.getDefensa()
-            val danoMonstruo = if (evasion >= 5) 0 else ataqueMonstruo - defensaPersonaje
+            val danoMonstruo = if (evasion >= 8) 0 else ataqueMonstruo - defensaPersonaje
 
-            if (evasion<5) {
+            if (evasion<8) {
+
                 vidaPersonaje -= danoMonstruo
             }
             texto1.visibility = View.VISIBLE

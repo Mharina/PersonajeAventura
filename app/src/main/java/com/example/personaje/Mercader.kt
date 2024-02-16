@@ -30,7 +30,7 @@ class Mercader : AppCompatActivity() {
         val dbHelperMercader = DatabaseHelperMercader(this)
         val arrayArticulos = dbHelperMercader.getArticulo()
         rest = findViewById(R.id.buttonRestar)
-        var uds: TextView = findViewById(R.id.udsText)
+        val uds: TextView = findViewById(R.id.udsText)
         sum = findViewById(R.id.buttonSumar)
         val pj = intent.getParcelableExtra<Personaje>("personaje")
         val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
@@ -89,8 +89,7 @@ class Mercader : AppCompatActivity() {
                     buy.visibility = View.INVISIBLE
                 }
 
-                var ale = Random()
-                var num = ale.nextInt(10)
+                var num = (0..arrayArticulos.size).random()
                 var imagen = arrayArticulos[num].getImg()
                 var ruta = resources.getIdentifier(imagen, "drawable", packageName)
                 actualizarBotones(dbHelperMercader.obtUdsArt(num + 1))
