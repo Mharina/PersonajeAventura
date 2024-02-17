@@ -58,6 +58,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     // Implementación de Realtime Database
     implementation("com.google.firebase:firebase-database-ktx")
+
+    implementation ("com.google.android.gms:play-services-tasks:18.0.0")
     //implementation("com.google.android.gms:play-services-auth:20.7.0")
     // Si queremos añadir más librerías podemos consultar las que hay en
     // https://firebase.google.com/docs/android/setup#available-libraries

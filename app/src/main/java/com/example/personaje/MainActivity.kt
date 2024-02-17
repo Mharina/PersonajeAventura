@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 nombre.setError("El campo nombre es necesario")
             } else {
                 textToSpeech.speak(
-                    nombre.text.toString().trim(),
+                    button.text.toString().trim(),
                     TextToSpeech.QUEUE_FLUSH,
                     null,
                     null

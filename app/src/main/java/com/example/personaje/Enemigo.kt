@@ -1,20 +1,20 @@
 package com.example.personaje
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
+import android.provider.CalendarContract
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import java.util.Random
 
 class Enemigo : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -39,6 +39,10 @@ class Enemigo : AppCompatActivity() {
         val moch = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
         val dbHelper3 = DatabaseEnemigo(this)
+//        val calendario = Calendario(this)
+//        val inicio = System.currentTimeMillis() * 60 * 60 * 1000
+//        val fin = inicio + 1 * 60 * 60 * 1000
+        val lvl = pj!!.getNivel()
         val dbPelea = DatabasePelea (this)
         val arrayMonstruo = dbHelper3.getMonstruo()
         var num = 0
@@ -173,6 +177,10 @@ class Enemigo : AppCompatActivity() {
                     actualizarBarraDeVidaM(0,monstruo.getSalud())
                     pj.setExperiencia(expGanada)
                     dbPelea.insertarPelea("",monstruo.getNombre(),"ganado")
+//                    calendario.crearEvento("Pelea","Has ganado contra ${monstruo.getNombre()}",inicio, fin)
+                    if(lvl!=pj.getNivel()){
+//                        calendario.crearEvento("Nivel","Has subido de nivel, lvl:${pj.getNivel()}",inicio, fin)
+                    }
                     texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
                     if(mp.isPlaying){
                         mp.stop()
@@ -188,6 +196,7 @@ class Enemigo : AppCompatActivity() {
                 if (vidaPersonaje <= 0) {
                     actualizarBarraDeVidaP(0,pj.getSalud())
                     dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
+//                    calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
                     texto1.text = "${pj.getNombre()} has muerto."
                     if(mp.isPlaying){
                         mp.stop()
@@ -226,6 +235,7 @@ class Enemigo : AppCompatActivity() {
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
                         dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
+//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
@@ -246,6 +256,7 @@ class Enemigo : AppCompatActivity() {
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
                         dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
+//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
