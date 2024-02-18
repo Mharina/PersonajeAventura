@@ -1,13 +1,12 @@
 package com.example.personaje
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.media.MediaPlayer
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -15,6 +14,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import java.util.Date
 
 class Enemigo : AppCompatActivity() {
@@ -31,7 +31,7 @@ class Enemigo : AppCompatActivity() {
         val inventario: Button = findViewById(R.id.button4)
         val texto1: TextView = findViewById(R.id.textView14)
         val texto2: TextView = findViewById(R.id.textView15)
-        val musica: ImageButton = findViewById(R.id.imageButton2)
+        val musica: ImageButton = findViewById(R.id.musica)
         val pocion: ImageButton = findViewById(R.id.imageButton3)
         val ira: ImageButton = findViewById(R.id.imageButton4)
         val textPocion: TextView = findViewById(R.id.textView)
@@ -50,6 +50,10 @@ class Enemigo : AppCompatActivity() {
         var pos=0
         val cImg = obtImg()
         val imgP: ImageView = findViewById(R.id.imageView3)
+        val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title="Enemigo"
         cImg.obtenerImagen3(imgP,pj!!.getRaza(),pj!!.getClase(),pj!!.getEstadoVital())
 
         if (contenidoMoch != null) {
@@ -277,5 +281,63 @@ class Enemigo : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        when(item.itemId){
+            R.id.personaje->{
+                val intent = Intent(this, InfoPersonaje::class.java)
+                // Recuperar objetos y arrays? a traves de las tablas
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
+                startActivity(intent)
+                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
+            }
+            R.id.mochila->{
+                val intent = Intent(this, PersonajeMostrar::class.java)
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
+                startActivity(intent)
+                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
+            }
+            R.id.libro->{
+                val intent = Intent(this, Libro::class.java)
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
+                startActivity(intent)
+                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
+            }
+            R.id.guardar->{
+
+                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
+            }
+            R.id.guardar_salir->{
+                val intent = Intent(this, Login::class.java)
+                // guardar mochila, personaje etc
+                startActivity(intent)
+                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
+            }
+            R.id.salir->{
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

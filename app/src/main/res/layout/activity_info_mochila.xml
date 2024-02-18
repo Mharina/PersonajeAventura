@@ -8,15 +8,7 @@
     android:background="@drawable/paredbuena"
     tools:context=".InfoMochila">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#CC000000"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Mochila"
-        app:titleTextColor="@color/white" />
+    <include layout="@layout/toolbar_ejemplo" />
 
     <ImageView
         android:id="@+id/imageView4"

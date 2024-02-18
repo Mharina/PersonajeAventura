@@ -14,12 +14,14 @@ import com.example.personaje.databinding.ActivityMainBinding
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class Login : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    val usuarioActual: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +48,20 @@ class Login : AppCompatActivity() {
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Log.d(ContentValues.TAG, "Login de usuario")
+                        val uidUsuario = usuarioActual?.uid
+                        val dbPj = DatabasePersonaje(this)
+                        if (dbPj.pjExiste(uidUsuario.toString())){
+                            val logueado = Intent(this, Partida::class.java)
+                            logueado.putExtra("uid", uidUsuario.toString())
+                            startActivity(logueado)
+                        } else {
+                            val logueado = Intent(this, MainActivity::class.java)
+                            logueado.putExtra("uid", uidUsuario.toString())
+                            startActivity(logueado)
+                        }
                         // Comprobar primero si ha jugado alguna vez mirando si tiene algun pj creado(uid)
                         // Personaje creado Partida si no a MainActivity
-                        val logueado = Intent(this, Partida::class.java)
-                        logueado.putExtra("email", email.editText?.text?.toString())
-                        startActivity(logueado)
+
                     } else {
                         Toast.makeText(this, "Error en el login", Toast.LENGTH_SHORT).show()
                     }

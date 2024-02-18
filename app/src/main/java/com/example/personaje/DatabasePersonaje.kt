@@ -31,6 +31,14 @@ class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, 
         db.execSQL("DROP TABLE IF EXISTS $TABLA_PERSONAJE")
         onCreate(db)
     }
+    fun pjExiste(uid: String): Boolean {
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLA_PERSONAJE WHERE $UID = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(uid))
+        val existe = cursor.count > 0
+        cursor.close()
+        return existe
+    }
 
     fun insertarPersonaje(personaje: Personaje, uid:String):Long {
         val db = this.writableDatabase

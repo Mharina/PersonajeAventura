@@ -9,16 +9,13 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 
 class InfoPersonaje : AppCompatActivity() {
 
-    val pj = intent.getParcelableExtra<Personaje>("personaje")
-    val moch = intent.getParcelableExtra<Mochila>("mochila")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_personaje)
-
-
 
         val nombre = findViewById<TextView>(R.id.textView19)
         val raza = findViewById<TextView>(R.id.textView21)
@@ -27,7 +24,13 @@ class InfoPersonaje : AppCompatActivity() {
         val nivel = findViewById<TextView>(R.id.textView27)
         val salud = findViewById<TextView>(R.id.textView29)
         val ataque = findViewById<TextView>(R.id.textView31)
+        val pj = intent.getParcelableExtra<Personaje>("personaje")
+        val moch = intent.getParcelableExtra<Mochila>("mochila")
         val foto: ImageView = findViewById(R.id.fotoP)
+        val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title="Ficha Personaje"
 
         nombre.text = "${pj?.getNombre()}"
         raza.text = "${pj?.getRaza()}"
@@ -47,45 +50,51 @@ class InfoPersonaje : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean{
         when(item.itemId){
             R.id.personaje->{
-                val intent = Intent(this@InfoPersonaje, InfoPersonaje::class.java)
-                intent.putExtra("personaje", pj)
-                intent.putExtra("mochila", moch)
-                if (moch != null) {
-                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-                }
+                val intent = Intent(this, InfoPersonaje::class.java)
+                // Recuperar objetos y arrays? a traves de las tablas
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
                 startActivity(intent)
                 Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
             }
             R.id.mochila->{
-                val intent = Intent(this@InfoPersonaje, InfoMochila::class.java)
-                intent.putExtra("personaje", pj)
-                intent.putExtra("mochila", moch)
-                if (moch != null) {
-                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-                }
+                val intent = Intent(this, PersonajeMostrar::class.java)
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
                 startActivity(intent)
                 Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
             }
             R.id.libro->{
-                val intent = Intent(this@InfoPersonaje, Libro::class.java)
-                intent.putExtra("personaje", pj)
-                intent.putExtra("mochila", moch)
-                if (moch != null) {
-                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-                }
+                val intent = Intent(this, Libro::class.java)
+//                intent.putExtra("personaje", pj)
+//                intent.putExtra("mochila", moch)
+//                intent.putExtra("uid", usuarioID)
+//                if (moch != null) {
+//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+//                }
                 startActivity(intent)
                 Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
             }
             R.id.guardar->{
+
                 Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
             }
             R.id.guardar_salir->{
-                val intent = Intent(this@InfoPersonaje, Login::class.java)
+                val intent = Intent(this, Login::class.java)
+                // guardar mochila, personaje etc
                 startActivity(intent)
                 Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
             }
             R.id.salir->{
-                val intent = Intent(this@InfoPersonaje, Login::class.java)
+                val intent = Intent(this, Login::class.java)
                 startActivity(intent)
                 Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
             }

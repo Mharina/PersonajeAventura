@@ -7,14 +7,7 @@
     android:orientation="vertical"
     tools:context=".InfoPersonaje">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#CC000000"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Información Personaje"
-        app:titleTextColor="@color/white" />
+    <include layout="@layout/toolbar_ejemplo" />
 
     <ImageView
         android:id="@+id/fotoP"

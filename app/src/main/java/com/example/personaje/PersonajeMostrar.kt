@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 
 class PersonajeMostrar : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +21,10 @@ class PersonajeMostrar : AppCompatActivity() {
         val clase = findViewById<TextView>(R.id.textView9)
         val estadoVital = findViewById<TextView>(R.id.textView11)
         val foto: ImageView = findViewById(R.id.imageView2)
+        val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Información del Personaje"
 
         nombre.text = "${pj?.getNombre()}"
         raza.text = "${pj?.getRaza()}"

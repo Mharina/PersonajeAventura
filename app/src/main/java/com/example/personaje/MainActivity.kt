@@ -31,13 +31,15 @@ class MainActivity : AppCompatActivity() {
         val spinnerClase: Spinner = findViewById(R.id.spinnerClase)
         val spinnerEstadoVital: Spinner = findViewById(R.id.spinnerEstadoVital)
         val foto: ImageView = findViewById(R.id.imageView)
-        val musica: ImageButton = findViewById(R.id.imageButton2)
+        val musica: ImageButton = findViewById(R.id.musica)
         val dbHelperA = DatabaseHelper (this)
         val dbHelperMercader = DatabaseHelperMercader (this)
         val dbHelperM = DatabaseEnemigo (this)
         val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
         val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_before_the_storm)
         val nombre: EditText = findViewById(R.id.editTextText)
+        val usuarioID = intent.getStringExtra("uid").toString()
+        supportActionBar?.title = "Creación de Personaje"
 
         dbHelperMercader.recreaTabla()
         dbHelperA.recreaTabla()
@@ -160,6 +162,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 intent.putExtra("mochila", personaje.getMochila())
                 intent.putExtra("personaje", personaje)
+                intent.putExtra("uid",usuarioID)
                 if(mp.isPlaying){
                     mp.stop()
                 }
@@ -168,44 +171,44 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean{
-        when(item.itemId){
-            R.id.personaje->{
-                val intent = Intent(this@MainActivity, InfoPersonaje::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
-            }
-            R.id.mochila->{
-                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
-            }
-            R.id.libro->{
-                val intent = Intent(this@MainActivity, Libro::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
-            }
-            R.id.guardar->{
-
-                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
-            }
-            R.id.guardar_salir->{
-                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
-            }
-            R.id.salir->{
-                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+//        when(item.itemId){
+//            R.id.personaje->{
+//                val intent = Intent(this@MainActivity, InfoPersonaje::class.java)
+//                startActivity(intent)
+//                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.mochila->{
+//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+//                startActivity(intent)
+//                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.libro->{
+//                val intent = Intent(this@MainActivity, Libro::class.java)
+//                startActivity(intent)
+//                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.guardar->{
+//
+//                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.guardar_salir->{
+//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+//                startActivity(intent)
+//                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
+//            }
+//            R.id.salir->{
+//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+//                startActivity(intent)
+//                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
 class Mochila(private var pesoMochila: Int)
     :Parcelable{

@@ -22,6 +22,7 @@ class Libro : AppCompatActivity() {
         val texto: TextView = findViewById(R.id.textView12)
         val dbPelea = DatabasePelea (this)
 
+
         texto.visibility = View.INVISIBLE
 
         fondo.background = resources.getDrawable(R.drawable.hoja_blanca)

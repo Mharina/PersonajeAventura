@@ -9,15 +9,7 @@
     android:orientation="vertical"
     tools:context=".Libro">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarEjemplo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#CC000000"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Libro"
-        app:titleTextColor="@color/white" />
+    <include layout="@layout/toolbar_ejemplo" />
 
     <TextView
         android:id="@+id/textView12"

@@ -8,15 +8,7 @@
     android:orientation="vertical"
     tools:context=".PersonajeMostrar">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#CC000000"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Personaje"
-        app:titleTextColor="@color/white" />
+    <include layout="@layout/toolbar_ejemplo" />
 
     <ImageView
         android:id="@+id/imageView2"

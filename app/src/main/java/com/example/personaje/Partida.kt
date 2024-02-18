@@ -12,13 +12,22 @@ class Partida : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPartidaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val usuarioID = intent.getStringExtra("uid").toString()
 
         binding.Empezar.setOnClickListener{
-            startActivity(Intent (this, MainActivity::class.java))
+            var intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("uid",usuarioID)
+            startActivity(intent)
         }
 
         binding.Continuar.setOnClickListener {
-            Toast.makeText(this, "Deberíua buscar en la DB por el pj y pasarlo a la activity Aventura", Toast.LENGTH_LONG).show()
+            val dbPj = DatabasePersonaje(this)
+            val pj=dbPj.getPersonaje(usuarioID)
+            var intent = Intent(this, Aventura::class.java)
+            intent.putExtra("uid",usuarioID)
+            intent.putExtra("personaje", pj)
+            startActivity(intent)
+            Toast.makeText(this, "Debería buscar en la DB por el pj y pasarlo a la activity Aventura", Toast.LENGTH_LONG).show()
         }
     }
 }
