@@ -69,6 +69,9 @@ class PersonajeMostrar : AppCompatActivity() {
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
             intent.putExtra("uid",usuarioID)
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             startActivity(intent)
         }
     }
