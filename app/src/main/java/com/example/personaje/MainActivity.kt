@@ -169,46 +169,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
     }
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean{
-//        when(item.itemId){
-//            R.id.personaje->{
-//                val intent = Intent(this@MainActivity, InfoPersonaje::class.java)
-//                startActivity(intent)
-//                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.mochila->{
-//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-//                startActivity(intent)
-//                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.libro->{
-//                val intent = Intent(this@MainActivity, Libro::class.java)
-//                startActivity(intent)
-//                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.guardar->{
-//
-//                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.guardar_salir->{
-//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-//                startActivity(intent)
-//                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
-//            }
-//            R.id.salir->{
-//                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
-//                startActivity(intent)
-//                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 }
 class Mochila(private var pesoMochila: Int)
     :Parcelable{
@@ -586,10 +547,10 @@ data class Personaje(
     private var nombre: String,
     private var estadoVital: String,
     private var raza: String,
-    private var clase: String,
+    private var clase: String
 
     ): Parcelable {
-    private val mochila = Mochila(44)
+    private var mochila = Mochila(44)
     private var salud: Int = 0
     private var ataque: Int = 0
     private var experiencia: Int
@@ -601,9 +562,7 @@ data class Personaje(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString()
-    ) {
-
-    }
+    )
 
     init {
         calcularSalud()
@@ -749,6 +708,10 @@ data class Personaje(
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    fun setMochila(mochila: Mochila) {
+        this.mochila=mochila
     }
 
     companion object CREATOR : Parcelable.Creator<Personaje> {

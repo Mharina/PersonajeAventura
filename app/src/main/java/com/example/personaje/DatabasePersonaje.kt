@@ -23,7 +23,16 @@ class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, 
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = "CREATE TABLE $TABLA_PERSONAJE ($KEY_ID INTEGER PRIMARY KEY, $UID TEXT, $COLUMN_NOMBRE TEXT, $COLUMN_ESTADOVITAL TEXT, $COLUMN_RAZA TEXT, $COLUMN_CLASE TEXT, $COLUMN_SALUD INTEGER, $COLUMN_NIVEL INTEGER, $COLUMN_EXPERIENCIA INTEGER)"
+        val createTable = "CREATE TABLE $TABLA_PERSONAJE (" +
+                "$KEY_ID INTEGER PRIMARY KEY, " +
+                "$UID TEXT, " +
+                "$COLUMN_NOMBRE TEXT, " +
+                "$COLUMN_ESTADOVITAL TEXT, " +
+                "$COLUMN_RAZA TEXT, " +
+                "$COLUMN_CLASE TEXT, " +
+                "$COLUMN_SALUD INTEGER, " +
+                "$COLUMN_NIVEL INTEGER, " +
+                "$COLUMN_EXPERIENCIA INTEGER)"
         db.execSQL(createTable)
     }
 
@@ -56,14 +65,18 @@ class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, 
         db.close()
         return id
     }
-
+    fun borrarPJ(uid: String) {
+        val db = this.writableDatabase
+        db.delete(TABLA_PERSONAJE, "$UID = ?", arrayOf(uid))
+        db.close()
+    }
 
     @SuppressLint("Range")
     fun getPersonaje(uid: String): Personaje? {
         var personaje:Personaje?=null
-        val selectQuery = "SELECT * FROM $TABLA_PERSONAJE WHERE $UID=$uid"
+        val selectQuery = "SELECT * FROM $TABLA_PERSONAJE WHERE $KEY_ID=?"
         val db = this.readableDatabase
-        val cursor = db.rawQuery(selectQuery, null)
+        val cursor = db.rawQuery(selectQuery, arrayOf(uid))
         if (cursor.moveToFirst()) {
             val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
             val estadoVital = cursor.getString(cursor.getColumnIndex(COLUMN_ESTADOVITAL))
@@ -72,6 +85,7 @@ class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, 
             val salud = cursor.getInt(cursor.getColumnIndex(COLUMN_SALUD))
             val nivel = cursor.getInt(cursor.getColumnIndex(COLUMN_NIVEL))
             val experiencia = cursor.getInt(cursor.getColumnIndex(COLUMN_EXPERIENCIA))
+
             personaje = Personaje(nombre, raza, clase, estadoVital)
             personaje.setNivel(nivel)
             personaje.setExperiencia(experiencia)

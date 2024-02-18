@@ -55,7 +55,10 @@ class Objeto : AppCompatActivity() {
             val intent = Intent(this@Objeto, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
-            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            intent.putExtra("uid",usuarioID)
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             startActivity(intent)
         }
 

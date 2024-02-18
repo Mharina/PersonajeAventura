@@ -12,10 +12,10 @@
     <ImageView
         android:id="@+id/fotoP"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:contentDescription="@string/personaje"
         android:padding="10dp"
-        app:srcCompat="@drawable/ic_launcher_background"
+        tools:src="@drawable/ic_launcher_background"
         tools:ignore="ImageContrastCheck" />
 
     <LinearLayout
@@ -37,7 +37,7 @@
             android:text="@string/nombre"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView19"
@@ -50,7 +50,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -72,7 +72,7 @@
             android:text="@string/raza"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView21"
@@ -85,7 +85,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -107,7 +107,7 @@
             android:text="@string/clase"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView23"
@@ -120,7 +120,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -142,7 +142,7 @@
             android:text="@string/estado_vital"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView25"
@@ -155,7 +155,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -177,7 +177,7 @@
             android:text="@string/nivel"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView27"
@@ -190,7 +190,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -212,7 +212,7 @@
             android:text="@string/salud"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView29"
@@ -225,7 +225,7 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -247,7 +247,7 @@
             android:text="@string/ataque"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="italic"></TextView>
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView31"
@@ -260,6 +260,50 @@
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/xP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#80000000"
+            android:paddingLeft="5dp"
+            android:text="Experiencia"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/campXP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#80000000"
+            android:paddingLeft="5dp"
+            tools:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Volver"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/negro_trans"
+        android:text="Volver"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 </LinearLayout>

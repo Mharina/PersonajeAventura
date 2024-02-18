@@ -209,7 +209,7 @@ class Enemigo : AppCompatActivity() {
                 ira.visibility = View.GONE
                 textIra.visibility = View.GONE
                 vidaMonstruo -= pj.getAtaque()
-                Thread.sleep(10)
+                Thread.sleep(333)
                 texto1.text = "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: $vidaMonstruo"
                 if (vidaMonstruo <= 0) {
                     actualizarBarraDeVidaM(0,monstruo.getSalud())
@@ -235,9 +235,10 @@ class Enemigo : AppCompatActivity() {
                     mp.stop()
                 }
                 actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
+                Thread.sleep(333)
                 actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
                 vidaPersonaje -= ataqueMonstruo
-                Thread.sleep(10)
+                Thread.sleep(333)
                 if (vidaPersonaje <= 0) {
                     actualizarBarraDeVidaP(0,pj.getSalud())
                     dbPelea.insertarPelea("",monstruo.getNombre(),"perdido",fecha)
