@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="#CC000000"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/PuntosBlancos"
         app:title="Dado"
         app:titleTextColor="@color/white" />
 

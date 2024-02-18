@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import java.util.Date
 
 class Enemigo : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -40,8 +41,7 @@ class Enemigo : AppCompatActivity() {
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
         val dbHelper3 = DatabaseEnemigo(this)
 //        val calendario = Calendario(this)
-//        val inicio = System.currentTimeMillis() * 60 * 60 * 1000
-//        val fin = inicio + 1 * 60 * 60 * 1000
+        val fecha = Date()
         val lvl = pj!!.getNivel()
         val dbPelea = DatabasePelea (this)
         val arrayMonstruo = dbHelper3.getMonstruo()
@@ -142,7 +142,7 @@ class Enemigo : AppCompatActivity() {
 
                         "Guerrero" -> {
                             pj.setDefensa(pj.getDefensa() * 2)
-                            texto1.text = "${pj.getNombre()} utiliza su habilidad de Guerrero para duplicar su suerte."
+                            texto1.text = "${pj.getNombre()} utiliza su habilidad de Guerrero para duplicar su defensa."
                             hab = true
                         }
                     }
@@ -171,32 +171,38 @@ class Enemigo : AppCompatActivity() {
                 ira.visibility = View.GONE
                 textIra.visibility = View.GONE
                 vidaMonstruo -= pj.getAtaque()
-                Thread.sleep(1000)
+                Thread.sleep(10)
                 texto1.text = "${pj.getNombre()} ataca al ${monstruo.getNombre()}. Salud del ${monstruo.getNombre()}: $vidaMonstruo"
                 if (vidaMonstruo <= 0) {
                     actualizarBarraDeVidaM(0,monstruo.getSalud())
                     pj.setExperiencia(expGanada)
-                    dbPelea.insertarPelea("",monstruo.getNombre(),"ganado")
-//                    calendario.crearEvento("Pelea","Has ganado contra ${monstruo.getNombre()}",inicio, fin)
+                    dbPelea.insertarPelea("",monstruo.getNombre(),"ganado",fecha)
+//                    calendario.crearEvento("Pelea","Has ganado contra ${monstruo.getNombre()}")
                     if(lvl!=pj.getNivel()){
-//                        calendario.crearEvento("Nivel","Has subido de nivel, lvl:${pj.getNivel()}",inicio, fin)
+//                        calendario.crearEvento("Nivel","Has subido de nivel, lvl:${pj.getNivel()}")
                     }
                     texto1.text = "${pj.getNombre()} has derrotado a ${monstruo.getNombre()}."
+                    pj.setSalud(vidaPersonaje)
                     if(mp.isPlaying){
                         mp.stop()
                     }
                     val intent = Intent(this@Enemigo, Aventura::class.java)
+                    intent.putExtra("personaje", pj)
+                    intent.putExtra("mochila", moch)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
                     startActivity(intent)
                     mp.stop()
                 }
                 actualizarBarraDeVidaP(vidaPersonaje,pj.getSalud())
                 actualizarBarraDeVidaM(vidaMonstruo,monstruo.getSalud())
                 vidaPersonaje -= ataqueMonstruo
-                Thread.sleep(1000)
+                Thread.sleep(10)
                 if (vidaPersonaje <= 0) {
                     actualizarBarraDeVidaP(0,pj.getSalud())
-                    dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
-//                    calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
+                    dbPelea.insertarPelea("",monstruo.getNombre(),"perdido",fecha)
+//                    calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}")
                     texto1.text = "${pj.getNombre()} has muerto."
                     if(mp.isPlaying){
                         mp.stop()
@@ -230,12 +236,13 @@ class Enemigo : AppCompatActivity() {
                         Toast.makeText(this, "No tienes pociones", Toast.LENGTH_LONG).show()
                     }else{
                         vidaPersonaje+=(pj.getSalud()*0.5).toInt()
+                        moch.quitarArticulo(moch.getContenido()[moch!!.findObjeto(Articulo.Nombre.POCION)],1)
                     }
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
-                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
-//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
+                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido",fecha)
+//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}")
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
@@ -251,22 +258,18 @@ class Enemigo : AppCompatActivity() {
                         Toast.makeText(this, "No tienes pociones", Toast.LENGTH_LONG).show()
                     }else{
                         pj.setAtaque(pj.getAtaque() + 80)
+                        moch.quitarArticulo(moch.getContenido()[moch!!.findObjeto(Articulo.Nombre.IRA)],1)
                     }
                     vidaPersonaje -= ataqueMonstruo
                     if (vidaPersonaje <= 0) {
                         actualizarBarraDeVidaP(0,pj.getSalud())
-                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido")
-//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}",inicio, fin)
+                        dbPelea.insertarPelea("",monstruo.getNombre(),"perdido",fecha)
+//                        calendario.crearEvento("Pelea","Has perdido contra ${monstruo.getNombre()}")
                         texto1.text = "${pj.getNombre()} has muerto."
                         if(mp.isPlaying){
                             mp.stop()
                         }
                         val intent = Intent(this@Enemigo, MainActivity::class.java)
-                        intent.putExtra("personaje", pj)
-                        intent.putExtra("mochila", moch)
-                        if (moch != null) {
-                            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-                        }
                         startActivity(intent)
                         mp.stop()
                     }

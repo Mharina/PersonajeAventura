@@ -22,6 +22,9 @@
     <string name="raza">Raza</string>
     <string name="clase">Clase</string>
     <string name="estado_vital">Estado Vital</string>
+    <string name="nivel">Nivel</string>
+    <string name="salud">Salud</string>
+    <string name="ataque">Ataque</string>
     <string name="proximamente">PROXIMAMENTE</string>
     <string name="uno">1</string>
     <string name="comerciar">Comerciar</string>

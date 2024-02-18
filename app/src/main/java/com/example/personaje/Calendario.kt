@@ -1,22 +1,20 @@
 package com.example.personaje
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.database.Cursor
 import android.provider.CalendarContract
 import android.widget.Toast
 
 class Calendario(private val context: Context) {
 
-    fun crearEvento(titulo: String, descripcion: String, inicio: Long, fin: Long): Boolean {
+    fun crearEvento(titulo: String, descripcion: String): Boolean {
         val values = ContentValues().apply {
-            put(CalendarContract.Events.DTSTART, inicio)
-            put(CalendarContract.Events.DTEND, fin)
+            put(CalendarContract.Events.DTSTART, System.currentTimeMillis() + 1000 * 60 * 60)
+            put(CalendarContract.Events.DTEND, System.currentTimeMillis() + 1000 * 60 * 60 * 2)
             put(CalendarContract.Events.TITLE, titulo)
             put(CalendarContract.Events.DESCRIPTION, descripcion)
-            put(CalendarContract.Events.CALENDAR_ID,obtenerIdCalendario())
+            put(CalendarContract.Events.CALENDAR_ID,1)
             put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Madrid")
         }
 
@@ -29,25 +27,5 @@ class Calendario(private val context: Context) {
             Toast.makeText(context, "Error al crear el evento", Toast.LENGTH_SHORT).show()
             false
         }
-    }
-
-    @SuppressLint("Range")
-    fun obtenerIdCalendario(): Long? {
-        val projection = arrayOf(
-            CalendarContract.Calendars._ID,
-            CalendarContract.Calendars.NAME
-        )
-
-        val uri: Uri = CalendarContract.Calendars.CONTENT_URI
-        val selection = "${CalendarContract.Calendars.VISIBLE} = 1"
-        val cursor: Cursor? = context.contentResolver.query(uri, projection, selection, null, null)
-
-        cursor?.use { cursor ->
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(cursor.getColumnIndex(CalendarContract.Calendars._ID))
-                return id
-            }
-        }
-        return null
     }
 }

@@ -4,8 +4,8 @@
     package="com.example.personaje">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
@@ -20,13 +20,19 @@
         android:theme="@style/Theme.Personaje"
         tools:targetApi="31">
         <activity
+            android:name=".InfoMochila"
+            android:exported="false" />
+        <activity
+            android:name=".InfoPersonaje"
+            android:exported="false" />
+        <activity
+            android:name=".Libro"
+            android:exported="false" />
+        <activity
             android:name=".Partida"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Proximamente"
             android:exported="false" />
         <activity
             android:name=".Enemigo"
@@ -36,9 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".Objeto"
-            android:exported="false" />
-        <activity
-            android:name=".Ciudad"
             android:exported="false" />
         <activity
             android:name=".Aventura"
@@ -51,6 +54,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

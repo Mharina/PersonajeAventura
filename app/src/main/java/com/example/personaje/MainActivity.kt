@@ -160,7 +160,6 @@ class MainActivity : AppCompatActivity() {
                 )
                 intent.putExtra("mochila", personaje.getMochila())
                 intent.putExtra("personaje", personaje)
-                intent.putExtra("imagen_id", foto.drawable.toString())
                 if(mp.isPlaying){
                     mp.stop()
                 }
@@ -176,7 +175,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean{
         when(item.itemId){
             R.id.personaje->{
-                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                val intent = Intent(this@MainActivity, InfoPersonaje::class.java)
                 startActivity(intent)
                 Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
             }
@@ -186,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
             }
             R.id.libro->{
-                val intent = Intent(this@MainActivity, PersonajeMostrar::class.java)
+                val intent = Intent(this@MainActivity, Libro::class.java)
                 startActivity(intent)
                 Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
             }
