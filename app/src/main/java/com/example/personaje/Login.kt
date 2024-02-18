@@ -59,9 +59,6 @@ class Login : AppCompatActivity() {
                             logueado.putExtra("uid", uidUsuario.toString())
                             startActivity(logueado)
                         }
-                        // Comprobar primero si ha jugado alguna vez mirando si tiene algun pj creado(uid)
-                        // Personaje creado Partida si no a MainActivity
-
                     } else {
                         Toast.makeText(this, "Error en el login", Toast.LENGTH_SHORT).show()
                     }

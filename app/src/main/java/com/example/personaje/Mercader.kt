@@ -3,6 +3,7 @@ package com.example.personaje
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,13 +13,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import java.util.Locale
 import java.util.Random
 
 class Mercader : AppCompatActivity() {
+    private lateinit var textToSpeech: TextToSpeech
     var unidades = 1
-    val unidadMinima = 1
+    var unidadMinima = 1
     private lateinit var rest: ImageButton
     private lateinit var sum: ImageButton
+    private lateinit var pj: Personaje
+    private lateinit var moch: Mochila
+    private lateinit var usuarioID: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mercader)
@@ -32,16 +38,17 @@ class Mercader : AppCompatActivity() {
         val buy: Button = findViewById(R.id.buy)
         val dbHelperMercader = DatabaseHelperMercader(this)
         val arrayArticulos = dbHelperMercader.getArticulo()
+        sum = findViewById(R.id.buttonSumar)
         rest = findViewById(R.id.buttonRestar)
         val uds: TextView = findViewById(R.id.udsText)
-        sum = findViewById(R.id.buttonSumar)
-        val pj = intent.getParcelableExtra<Personaje>("personaje")
-        val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
-        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
         val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+        pj = intent.getParcelableExtra<Personaje>("personaje")!!
+        moch = intent.getParcelableExtra<Mochila>("mochila")!!
+        usuarioID = intent.getStringExtra("uid").toString()
+        val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title="Mercader"
+        supportActionBar?.title = "Mercader"
 
         if (contenidoMoch != null) {
             contenidoMoch.forEach {
@@ -51,15 +58,39 @@ class Mercader : AppCompatActivity() {
             }
         }
 
+        textToSpeech = TextToSpeech(this){status->
+            if (status ==TextToSpeech.SUCCESS){
+                val result = textToSpeech.setLanguage(Locale.getDefault())
+                if (result == TextToSpeech.LANG_MISSING_DATA||result == TextToSpeech.LANG_NOT_SUPPORTED){
+                    Toast.makeText(this,"lenguaje no soportado", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
         continuar.setOnClickListener {
+            textToSpeech.speak(
+                continuar.text.toString().trim(),
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                null
+            )
             val intent = Intent(this@Mercader, Aventura::class.java)
-            intent.putParcelableArrayListExtra("contenido", moch?.getContenido())
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
+            intent.putExtra("uid",usuarioID)
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             startActivity(intent)
         }
 
         comerciar.setOnClickListener {
+            textToSpeech.speak(
+                comerciar.text.toString().trim(),
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                null
+            )
             comerciar.visibility = View.GONE
             continuar.visibility = View.GONE
             compra.visibility = View.VISIBLE
@@ -81,7 +112,20 @@ class Mercader : AppCompatActivity() {
             }
 
             compra.setOnClickListener {
+                textToSpeech.speak(
+                    compra.text.toString().trim(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    null
+                )
                 cancela.setOnClickListener {
+                    textToSpeech.speak(
+                        cancela.text.toString().trim(),
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                    uds.text = "1"
                     foto.setImageResource(R.drawable.mercader)
                     comerciar.visibility = View.VISIBLE
                     continuar.visibility = View.VISIBLE
@@ -143,7 +187,19 @@ class Mercader : AppCompatActivity() {
             }
 
             venta.setOnClickListener {
+                textToSpeech.speak(
+                    venta.text.toString().trim(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    null
+                )
                 cancela.setOnClickListener {
+                    textToSpeech.speak(
+                        cancela.text.toString().trim(),
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
                     foto.setImageResource(R.drawable.mercader)
                     comerciar.visibility = View.VISIBLE
                     continuar.visibility = View.VISIBLE
@@ -194,35 +250,34 @@ class Mercader : AppCompatActivity() {
         when(item.itemId){
             R.id.personaje->{
                 val intent = Intent(this, InfoPersonaje::class.java)
-                // Recuperar objetos y arrays? a traves de las tablas
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
             }
             R.id.mochila->{
-                val intent = Intent(this, PersonajeMostrar::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                val intent = Intent(this, InfoMochila::class.java)
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
             }
             R.id.libro->{
                 val intent = Intent(this, Libro::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
             }

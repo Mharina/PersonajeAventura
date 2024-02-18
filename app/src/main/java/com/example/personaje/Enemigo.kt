@@ -1,12 +1,13 @@
 package com.example.personaje
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.provider.CalendarContract
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -18,6 +19,9 @@ import androidx.appcompat.widget.Toolbar
 import java.util.Date
 
 class Enemigo : AppCompatActivity() {
+    private lateinit var pj: Personaje
+    private lateinit var moch: Mochila
+    private lateinit var usuarioID: String
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +40,6 @@ class Enemigo : AppCompatActivity() {
         val ira: ImageButton = findViewById(R.id.imageButton4)
         val textPocion: TextView = findViewById(R.id.textView)
         val textIra: TextView = findViewById(R.id.textView16)
-        val pj = intent.getParcelableExtra<Personaje>("personaje")
-        val moch = intent.getParcelableExtra<Mochila>("mochila")
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
         val dbHelper3 = DatabaseEnemigo(this)
 //        val calendario = Calendario(this)
@@ -51,10 +53,13 @@ class Enemigo : AppCompatActivity() {
         val cImg = obtImg()
         val imgP: ImageView = findViewById(R.id.imageView3)
         val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+        pj = intent.getParcelableExtra<Personaje>("personaje")!!
+        moch = intent.getParcelableExtra<Mochila>("mochila")!!
+        usuarioID = intent.getStringExtra("uid").toString()
+        cImg.obtenerImagen3(imgP,pj!!.getRaza(),pj!!.getClase(),pj!!.getEstadoVital())
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title="Enemigo"
-        cImg.obtenerImagen3(imgP,pj!!.getRaza(),pj!!.getClase(),pj!!.getEstadoVital())
+        supportActionBar?.title = "Enemigo"
 
         if (contenidoMoch != null) {
             contenidoMoch.forEach {
@@ -105,6 +110,10 @@ class Enemigo : AppCompatActivity() {
             val intent = Intent(this@Enemigo, Aventura::class.java)
             intent.putExtra("personaje", pj)
             intent.putExtra("mochila", moch)
+            intent.putExtra("uid", usuarioID)
+            if (moch != null) {
+                intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+            }
             if(mp.isPlaying){
                 mp.stop()
             }
@@ -193,6 +202,7 @@ class Enemigo : AppCompatActivity() {
                     val intent = Intent(this@Enemigo, Aventura::class.java)
                     intent.putExtra("personaje", pj)
                     intent.putExtra("mochila", moch)
+                    intent.putExtra("uid", usuarioID)
                     if (moch != null) {
                         intent.putParcelableArrayListExtra("contenido", moch.getContenido())
                     }
@@ -211,7 +221,13 @@ class Enemigo : AppCompatActivity() {
                     if(mp.isPlaying){
                         mp.stop()
                     }
-                    val intent = Intent(this@Enemigo, MainActivity::class.java)
+                    val intent = Intent(this@Enemigo, Aventura::class.java)
+                    intent.putExtra("personaje", pj)
+                    intent.putExtra("mochila", moch)
+                    intent.putExtra("uid", usuarioID)
+                    if (moch != null) {
+                        intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                    }
                     startActivity(intent)
                     mp.stop()
                 }
@@ -251,7 +267,13 @@ class Enemigo : AppCompatActivity() {
                         if(mp.isPlaying){
                             mp.stop()
                         }
-                        val intent = Intent(this@Enemigo, MainActivity::class.java)
+                        val intent = Intent(this@Enemigo, Aventura::class.java)
+                        intent.putExtra("personaje", pj)
+                        intent.putExtra("mochila", moch)
+                        intent.putExtra("uid", usuarioID)
+                        if (moch != null) {
+                            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                        }
                         startActivity(intent)
                         mp.stop()
                     }
@@ -273,7 +295,13 @@ class Enemigo : AppCompatActivity() {
                         if(mp.isPlaying){
                             mp.stop()
                         }
-                        val intent = Intent(this@Enemigo, MainActivity::class.java)
+                        val intent = Intent(this@Enemigo, Aventura::class.java)
+                        intent.putExtra("personaje", pj)
+                        intent.putExtra("mochila", moch)
+                        intent.putExtra("uid", usuarioID)
+                        if (moch != null) {
+                            intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                        }
                         startActivity(intent)
                         mp.stop()
                     }
@@ -281,63 +309,5 @@ class Enemigo : AppCompatActivity() {
                 }
             }
         }
-    }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean{
-        when(item.itemId){
-            R.id.personaje->{
-                val intent = Intent(this, InfoPersonaje::class.java)
-                // Recuperar objetos y arrays? a traves de las tablas
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
-                startActivity(intent)
-                Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
-            }
-            R.id.mochila->{
-                val intent = Intent(this, PersonajeMostrar::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
-                startActivity(intent)
-                Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
-            }
-            R.id.libro->{
-                val intent = Intent(this, Libro::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
-                startActivity(intent)
-                Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
-            }
-            R.id.guardar->{
-
-                Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
-            }
-            R.id.guardar_salir->{
-                val intent = Intent(this, Login::class.java)
-                // guardar mochila, personaje etc
-                startActivity(intent)
-                Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
-            }
-            R.id.salir->{
-                val intent = Intent(this, Login::class.java)
-                startActivity(intent)
-                Toast.makeText(this,"salir", Toast.LENGTH_LONG).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

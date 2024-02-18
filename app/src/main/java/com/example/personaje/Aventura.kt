@@ -12,21 +12,21 @@ import androidx.appcompat.widget.Toolbar
 import java.util.Random
 
 class Aventura : AppCompatActivity() {
-
+    private lateinit var pj: Personaje
+    private lateinit var moch: Mochila
+    private lateinit var usuarioID: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aventura)
         val dado: ImageButton = findViewById(R.id.imageButton)
         val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
-        val pj = intent.getParcelableExtra<Personaje>("personaje")
-        val moch: Mochila? = intent.getParcelableExtra<Mochila>("mochila")
+        pj = intent.getParcelableExtra<Personaje>("personaje")!!
+        moch = intent.getParcelableExtra<Mochila>("mochila")!!
+        usuarioID = intent.getStringExtra("uid").toString()
         val contenidoMoch = intent.getParcelableArrayListExtra<Articulo>("contenido")
-        val usuarioID = intent.getStringExtra("uid").toString()
-
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Aventura"
-
 
         if (contenidoMoch != null) {
             contenidoMoch.forEach {
@@ -81,35 +81,34 @@ class Aventura : AppCompatActivity() {
         when(item.itemId){
             R.id.personaje->{
                 val intent = Intent(this, InfoPersonaje::class.java)
-                // Recuperar objetos y arrays? a traves de las tablas
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"personaje", Toast.LENGTH_LONG).show()
             }
             R.id.mochila->{
-                val intent = Intent(this, PersonajeMostrar::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                val intent = Intent(this, InfoMochila::class.java)
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"mochila", Toast.LENGTH_LONG).show()
             }
             R.id.libro->{
                 val intent = Intent(this, Libro::class.java)
-//                intent.putExtra("personaje", pj)
-//                intent.putExtra("mochila", moch)
-//                intent.putExtra("uid", usuarioID)
-//                if (moch != null) {
-//                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
-//                }
+                intent.putExtra("personaje", pj)
+                intent.putExtra("mochila", moch)
+                intent.putExtra("uid", usuarioID)
+                if (moch != null) {
+                    intent.putParcelableArrayListExtra("contenido", moch.getContenido())
+                }
                 startActivity(intent)
                 Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
             }
