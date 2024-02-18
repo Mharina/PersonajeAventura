@@ -25,6 +25,7 @@ class Mercader : AppCompatActivity() {
     private lateinit var pj: Personaje
     private lateinit var moch: Mochila
     private lateinit var usuarioID: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mercader)
