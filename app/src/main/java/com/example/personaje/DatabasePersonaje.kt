@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     companion object {
@@ -73,14 +74,18 @@ class DatabasePersonaje(context: Context) : SQLiteOpenHelper(context, DATABASE, 
 
     @SuppressLint("Range")
     fun getPersonaje(uid: String): Personaje? {
+        Log.d("DatabasePersonaje", "Recuperando personaje con UID: $uid")
         var personaje:Personaje?=null
-        val selectQuery = "SELECT * FROM $TABLA_PERSONAJE WHERE $KEY_ID=?"
+        val selectQuery = "SELECT * FROM $TABLA_PERSONAJE WHERE $UID=?"
+        Log.d("ConsultaSQL", selectQuery)
         val db = this.readableDatabase
         val cursor = db.rawQuery(selectQuery, arrayOf(uid))
         if (cursor.moveToFirst()) {
             val nombre = cursor.getString(cursor.getColumnIndex(COLUMN_NOMBRE))
+            Log.d("DatabasePersonaje", "Nombre del personaje: $nombre")
             val estadoVital = cursor.getString(cursor.getColumnIndex(COLUMN_ESTADOVITAL))
             val clase = cursor.getString(cursor.getColumnIndex(COLUMN_CLASE))
+            Log.d("DatabasePersonaje", "Clase del personaje: $clase")
             val raza = cursor.getString(cursor.getColumnIndex(COLUMN_RAZA))
             val salud = cursor.getInt(cursor.getColumnIndex(COLUMN_SALUD))
             val nivel = cursor.getInt(cursor.getColumnIndex(COLUMN_NIVEL))

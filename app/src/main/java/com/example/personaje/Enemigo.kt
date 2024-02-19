@@ -26,12 +26,13 @@ class Enemigo : AppCompatActivity() {
     private lateinit var pj: Personaje
     private lateinit var moch: Mochila
     private lateinit var usuarioID: String
-    val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
+    private lateinit var mp: MediaPlayer
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enemigo)
 
+        mp = MediaPlayer.create(this, R.raw.skyrim_dovahkiin)
         pj = intent.getParcelableExtra<Personaje>("personaje")!!
         moch = intent.getParcelableExtra<Mochila>("mochila")!!
         usuarioID = intent.getStringExtra("uid").toString()
@@ -539,7 +540,8 @@ class Enemigo : AppCompatActivity() {
                 Toast.makeText(this,"libro", Toast.LENGTH_LONG).show()
             }
             R.id.guardar->{
-
+                val dbPJ = DatabasePersonaje(this)
+                dbPJ.insertarPersonaje(pj,usuarioID)
                 Toast.makeText(this,"guardar", Toast.LENGTH_LONG).show()
             }
             R.id.guardar_salir->{
@@ -547,7 +549,8 @@ class Enemigo : AppCompatActivity() {
                     mp.stop()
                 }
                 val intent = Intent(this, Login::class.java)
-                // guardar mochila, personaje etc
+                val dbPJ = DatabasePersonaje(this)
+                dbPJ.insertarPersonaje(pj,usuarioID)
                 startActivity(intent)
                 Toast.makeText(this,"guardar y salir", Toast.LENGTH_LONG).show()
             }

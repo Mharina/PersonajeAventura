@@ -18,11 +18,13 @@ class InfoMochila : AppCompatActivity() {
     private lateinit var pj: Personaje
     private lateinit var moch: Mochila
     private lateinit var usuarioID: String
-    val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_tundra)
+    private lateinit var mp: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_mochila)
+
         val toolbar: Toolbar = findViewById(R.id.toolbarEjemplo)
+        mp = MediaPlayer.create(this, R.raw.skyrim_tundra)
         pj = intent.getParcelableExtra<Personaje>("personaje")!!
         moch = intent.getParcelableExtra<Mochila>("mochila")!!
         usuarioID = intent.getStringExtra("uid").toString()

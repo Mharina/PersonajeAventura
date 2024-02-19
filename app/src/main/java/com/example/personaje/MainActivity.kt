@@ -710,10 +710,6 @@ data class Personaje(
         return 0
     }
 
-    fun setMochila(mochila: Mochila) {
-        this.mochila=mochila
-    }
-
     companion object CREATOR : Parcelable.Creator<Personaje> {
         override fun createFromParcel(parcel: Parcel): Personaje {
             return Personaje(parcel)

@@ -28,7 +28,8 @@ class PersonajeMostrar : AppCompatActivity() {
         val foto: ImageView = findViewById(R.id.imageView2)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Persionaje Creado"
+        supportActionBar?.title = "Personaje Creado"
+
         nombre.text = "${pj?.getNombre()}"
         raza.text = "${pj?.getRaza()}"
         clase.text = "${pj?.getClase()}"

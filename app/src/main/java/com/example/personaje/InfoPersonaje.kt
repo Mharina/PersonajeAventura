@@ -17,12 +17,13 @@ class InfoPersonaje : AppCompatActivity() {
     private lateinit var pj: Personaje
     private lateinit var moch: Mochila
     private lateinit var usuarioID: String
-    val mp: MediaPlayer = MediaPlayer.create(this, R.raw.skyrim_tundra)
+    private lateinit var mp: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info_personaje)
 
+        mp = MediaPlayer.create(this, R.raw.skyrim_tundra)
         val nombre = findViewById<TextView>(R.id.textView19)
         val raza = findViewById<TextView>(R.id.textView21)
         val clase = findViewById<TextView>(R.id.textView23)
